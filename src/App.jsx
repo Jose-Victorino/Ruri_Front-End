@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Outlet } from 'react-router'
 
-import Navigation from '/src/components/navigation/navigation'
+import Navigation from '/src/components/Navigation/Navigation'
 
 import './App.module.scss'
 

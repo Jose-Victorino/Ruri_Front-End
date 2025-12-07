@@ -1,4 +1,4 @@
-@use '/src/library/base' as base;
+@use '@/library/base' as base;
 
 .header{
   background: base.$primary-color;

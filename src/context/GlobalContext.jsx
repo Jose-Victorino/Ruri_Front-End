@@ -4,29 +4,12 @@ import { initialState } from './initialState'
 const GlobalContext = createContext();
 
 const ACTIONS = {
-  SET_SELECTED_STUDENT: 'set_selected_student',
-  SET_PREREQUISITE_STATUS: 'set_prerequisite_status',
 };
 
 function reducer(state, action) {
   const {type, payload} = action;
 
   switch (type) {
-    case ACTIONS.SET_SELECTED_STUDENT:
-      if (state.selectedStudent?.name === payload.name) {
-        return state;
-      }
-      return { ...state,
-        selectedStudent: {
-          ...payload
-        }
-      };
-    case ACTIONS.SET_PREREQUISITE_STATUS:
-      return { ...state,
-        courseStatus: {
-          ...payload
-        }
-      }
     default:
       return state;
   }

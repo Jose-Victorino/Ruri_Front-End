@@ -1,10 +1,10 @@
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import { GlobalProvider } from '/src/context/GlobalContext';
+import { GlobalProvider } from '@/context/GlobalContext';
 
-import App from './App.jsx'
-import './library/reset.scss'
-import Shop from './components/Shop/Shop.jsx';
+import App from '@/App.jsx'
+import '@/library/reset.scss'
+import Shop from '@/components/Shop/Shop.jsx';
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
