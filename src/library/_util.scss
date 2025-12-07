@@ -1,0 +1,94 @@
+:root{
+  --container-width: 1350px;
+}
+
+.container{
+  width: var(--container-width);
+  margin-inline: auto;
+  height: 100%;
+}
+
+.pos-r{
+  position: relative;
+}
+.pos-a{
+  position: absolute;
+  z-index: 10;
+}
+
+.flex{
+  display: flex;
+  
+  &-col{ @extend .flex;
+    flex-direction: column;
+
+    &-reverse{ @extend .flex;
+      flex-direction: column-reverse;
+    }
+  }
+  &-row{ @extend .flex;
+    flex-direction: row;
+
+    &-reverse{ @extend .flex;
+      flex-direction: row-reverse;
+    }
+  }
+  &-wrap{ @extend .flex;
+    flex-wrap: wrap;
+  }
+  &-wrap-reverse{ @extend .flex;
+    flex-wrap: wrap-reverse;
+  }
+
+}
+.j-start{ justify-content: flex-start; }
+.j-center{ justify-content: center; }
+.j-end{ justify-content: flex-end; }
+.j-space-around{ justify-content: space-around; }
+.j-space-between{ justify-content: space-between; }
+.j-space-evenly{ justify-content: space-evenly; }
+.a-start{ align-items: flex-start; }
+.a-center{ align-items: center; }
+.a-end{ align-items: flex-end; }
+.a-stretch{ align-items: stretch; }
+.a-baseline{ align-items: baseline; }
+
+@for $i from 1 through 10{
+  .gap-#{$i * 5}{
+    gap: #{$i * 5}px;
+  }
+}
+
+
+@media(max-width: 1400px){
+  :root{
+    --container-width: 1140px;
+  }
+
+}
+
+@media(max-width: 1200px){
+  :root{
+    --container-width: 940px;
+  }
+}
+
+@media(max-width: 980px){
+  :root{
+    --container-width: 720px;
+  }
+}
+
+@media(max-width: 780px){
+  :root{
+    --container-width: 540px;
+  }
+}
+
+@media(max-width: 560px){
+  :root{
+    --container-width: calc(100% - 40px);
+  }
+
+  td, th{ padding: 3px; }
+}

@@ -1,0 +1,98 @@
+// v2.4
+@use './base' as base;
+@use './util' as util;
+
+*, *::before, *::after {
+  text-decoration: none;
+	box-sizing: border-box;
+  scroll-behavior: smooth;
+	margin: 0;
+	padding: 0;
+}
+html, body{
+  overflow: hidden;
+}
+body{
+  font-family: base.$font1;
+  width: 100%;
+  height: 100dvh;
+}
+
+// text tags
+h4, p, span, li, th, td, button{
+  font-size: 16px;
+}
+h1, h2, h3, h4, h5, h6, p, span, a{ line-height: 1.5; }
+a{
+  font-family: inherit;
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+code, pre, kbd, samp{
+  font-family: monospace;
+}
+b, strong{
+  font-weight: bolder;
+}
+blockquote, q {
+  quotes: none;
+}
+
+// button
+button{
+  font-family: inherit;
+  color: black;
+  background: none;
+  border: none;
+
+  &[type=button]:not(:disabled),
+  &[type=reset]:not(:disabled),
+  &[type=submit]:not(:disabled),
+  &:not(:disabled){
+    cursor: pointer;
+  }
+}
+
+// list
+ol, ul{ list-style: none; }
+
+// table
+table{
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+td, th{
+  padding: 4px;
+  border: 1px solid black;
+}
+
+// form tags
+input, textarea, select{
+  font-family: inherit;
+}
+:is(input, textarea, select, button):focus-visible{
+  outline: none;
+}
+input, textarea{
+  color: black;
+  outline: none;
+  padding: 3px;
+  border: 1px solid hsl(222, 2%, 20%);
+  
+  &:focus{ border: 1px solid hsl(0, 0%, 65%); }
+}
+select, option{
+  font-size: 11px;
+  font-style: normal;
+  padding: 3px;
+}
+input[type="checkbox"],
+input[type="radio"],
+input[type="file"],
+input[type="image"],
+input[type="url"]{
+  cursor: pointer;
+}
+
+// image

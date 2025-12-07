@@ -1,0 +1,52 @@
+@use '/src/library/base' as base;
+
+.hero{
+  background: url('/src/assets/header.jpg') no-repeat;
+  background-size: cover;
+  position: relative;
+  height: calc(100vh - 117.6px);
+  color: white;
+
+  &::after{
+    content: '';
+    background-color: hsla(0, 0%, 20%, 0.4);  
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  & > div{
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+  }
+  .text{
+    width: 900px;
+    height: fit-content;
+  }
+
+  h2{
+    font-size: 1.2em;
+  }
+  h1{
+    font-size: 3.75em;
+    line-height: 1.2;
+  }
+  .text div{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+
+    button{
+      background: base.$secondary-color;
+      padding: 0.75em 1.25em;
+      line-height: 1.5;
+      border-radius: 2em;
+      a {      
+        color: white;
+      }
+    }
+  }
+}
+

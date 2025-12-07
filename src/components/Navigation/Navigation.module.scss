@@ -1,0 +1,96 @@
+@use '/src/library/base' as base;
+
+.header{
+  background: base.$primary-color;
+}
+
+:is(.top, .bottom) > *{
+  display: flex;
+  align-items: center;
+}
+
+.top{
+  border-bottom: 2px solid base.$highlight-color;
+
+  & > *{
+    justify-content: end;
+    gap: 40px;
+
+    .navLinks a{
+      padding-block: 13px;
+    }
+    .cart{
+      position: relative;
+
+      img{
+        height: 25px;
+        width: 25px;
+      }
+
+      span{
+        position: absolute;
+        bottom: 50%;
+        right: 0;
+        transform: translateX(50%);
+        background: base.$secondary-color;
+        color: white;
+        font-weight: bold;
+        line-height: 1.2;
+        font-size: 0.8em;
+        border-radius: 0.5em;
+        padding: 0 4px;
+      }
+    }
+  }
+}
+.bottom > *{
+  justify-content: space-between;
+
+  .logo img{
+    height: 45px;
+  }
+  .navLinks a{
+    padding-block: 21px;
+  }
+  .searchBar{
+    background: base.$gs-w-100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    height: 40px;
+    width: 350px;
+    border-radius: 20px;
+    padding-inline: 20px;
+
+    input{
+      background: none;
+      font-size: 16px;
+      border: none;
+      width: 100%;
+    }
+
+    img{
+      height: 25px;
+      width: 25px;
+    }
+  }
+}
+
+.navLinks{
+  display: flex;
+  gap: 20px;
+
+  li{
+    display: flex;
+  }
+  a{
+    color: white;
+    transition: color 0.3s ease-in-out;
+
+    &:hover, &.active{
+      color: base.$link-color;
+    }
+  }
+}
+
