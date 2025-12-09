@@ -8,5 +8,8 @@ export default defineConfig({
     alias: {
       "@": '/src'
     }
+  },
+  preview: {
+    allowedHosts: ['ruri-front-end.onrender.com']
   }
 })

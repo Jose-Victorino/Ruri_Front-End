@@ -1,0 +1,28 @@
+.item{
+  aspect-ratio: 0.8;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  
+  .imgCont{
+    background-color: hsl(0, 0%, 90%);
+    aspect-ratio: 1;
+    position: relative;
+
+    a{
+      display: flex;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .textCont{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    button{
+      aspect-ratio: 1;
+    }
+  }
+}

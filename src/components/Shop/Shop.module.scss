@@ -9,7 +9,7 @@
 
   &::after{
     content: '';
-    background-color: hsla(0, 0%, 20%, 0.4);  
+    background-color: hsla(0, 0%, 0%, 0.6);  
     position: absolute;
     inset: 0;
     z-index: 0;
@@ -21,15 +21,19 @@
     align-items: center;
   }
   .text{
-    width: 900px;
+    width: 640px;
     height: fit-content;
   }
 
   h2{
     font-size: 1.2em;
+
+    b{
+      color: base.$secondary-color;
+    }
   }
   h1{
-    font-size: 3.75em;
+    font-size: 4em;
     line-height: 1.2;
   }
   .text div{
@@ -43,10 +47,89 @@
       padding: 0.75em 1.25em;
       line-height: 1.5;
       border-radius: 2em;
-      a {      
+
+      a{
         color: white;
       }
     }
   }
 }
 
+.categories{
+  text-align: center;
+  padding-block: 80px;
+
+  h2{
+    font-size: 3em;
+    line-height: 1;
+  }
+  p{
+    color: base.$gs-w-50;
+  }
+  .categoryList{
+    display: flex;
+    height: 270px;
+
+    li{
+      background-color: hsl(0, 0%, 90%);
+      height: 100%;
+      flex-grow: 1;
+    }
+  }
+}
+
+.shop{
+  padding-block: 80px;
+
+  ul{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+    gap: 20px;
+  }
+  button{
+    background: base.$gs-b-60;
+    display: flex;
+    padding: 8px;
+    border-radius: 50%;
+
+    img{
+      height: 18px;
+      width: 18px;
+    }
+  }
+}
+
+.footer{
+  padding-block: 80px;
+
+  img{
+    min-width: 50%;
+    height: 300px;
+  }
+  & > div{
+    display: flex;
+    gap: 25px;
+  }
+
+  h2{
+    font-size: 3em;
+    line-height: 1.2;
+    
+    span{
+      font-size: inherit;
+      color: base.$primary-light;
+    }
+  }
+
+  button{
+    background: base.$secondary-color;
+    padding: 0.75em 1.25em;
+    line-height: 1.5;
+    border-radius: 2em;
+    margin-top: 15px;
+
+    a{
+      color: white;
+    }
+  }
+}

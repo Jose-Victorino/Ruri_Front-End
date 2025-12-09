@@ -1,0 +1,29 @@
+@use '@/library/base' as base;
+.footer{
+  border-top: 2px solid base.$gs-w-80;
+}
+.top{
+  & > div{
+    display: flex;
+    justify-content: space-evenly;
+    padding-block: 80px;
+
+    & > div{
+      display: flex;
+      flex-direction: column;
+      gap: 55px;
+    }
+  }
+
+  h2{
+    text-align: center;
+    width: 100%;
+  }
+}
+
+.bottom{
+  background: base.$gs-w-80;
+  display: flex;
+  justify-content: center;
+  padding-block: 12px;
+}

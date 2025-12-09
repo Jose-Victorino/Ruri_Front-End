@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $font1: 'Lato', sans-serif;
 $font2: 'lucida grande', tahoma, verdana, arial, sans-serif;
 $font3: 'Poppins', 'Roboto', 'Open Sans', sans-serif;
@@ -36,6 +38,8 @@ $gs-b-100: hsl(214, 15%, 6%);
 $primary-color: hsl(133, 50%, 30%);
 $secondary-color: hsl(38, 95%, 52%);
 $highlight-color: hsl(132, 33%, 81%);
+
+$primary-light: color.scale($primary-color, $lightness: 15%);
 
 $link-color: $secondary-color;
 

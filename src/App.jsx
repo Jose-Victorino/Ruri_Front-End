@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { Outlet } from 'react-router'
 
-import Navigation from '/src/components/Navigation/Navigation'
+import Navigation from '@/components/Navigation/Navigation'
 
 import './App.module.scss'
+import Footer from '@/components/Footer/Footer'
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
     <>
       <Navigation />
       <Outlet />
+      <Footer />
     </>
   )
 }
