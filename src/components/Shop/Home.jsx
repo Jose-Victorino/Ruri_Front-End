@@ -4,6 +4,7 @@ import { useParams, NavLink, Routes, Route, useNavigate } from 'react-router-dom
 import Item from './Item'
 
 import s from './Home.module.scss'
+import banner2 from '@/assets/banner-2.png'
 
 const CATEGORIES = ['CSA Boxes', 'Fruits', 'Rescue Buy', 'Exclusives', 'Wholesale']
 
@@ -54,7 +55,7 @@ function Shop() {
       </section>
       <section className={s.footer}>
         <div className='container'>
-          <img src="/src/assets/banner-2.png" alt="banner" />
+          <img src={banner2} alt="banner" />
           <div>
             <h2><span>Together,</span> we can achieve our vision.</h2>
             <p>Real change doesn't come from big, dramatic efforts. It grows quietly through small acts of kindness, a sense of duty, and a commitment to something greater than ourselves. It's about being aware, caring, and choosing to take action when it matters. By joining Ruri Club, you're part of a community working towards a future where fairness and sustainability aren't just ideals — they're realities we build together, step by step.</p>

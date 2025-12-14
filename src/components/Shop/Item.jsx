@@ -2,6 +2,7 @@ import React from 'react'
 import { useParams, NavLink, Link, Routes, Route, useNavigate } from 'react-router-dom'
 
 import s from './Item.module.scss'
+import cartPlus from '../../assets/svg/cart-plus.svg'
 
 function Item() {
   return (
@@ -17,7 +18,7 @@ function Item() {
           <span>{`₱${1000}`}</span>
         </div>
         <button>
-          <img src="/src/assets/svg/cart-plus.svg" loading="lazy" alt="add-to-cart" />
+          <img src={cartPlus} loading="lazy" alt="add-to-cart" />
         </button>
       </div>
     </li>

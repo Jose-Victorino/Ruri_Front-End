@@ -3,6 +3,17 @@ import { useParams, NavLink, Link, Routes, Route, useNavigate } from 'react-rout
 import cn from 'classnames'
 
 import s from './Product.module.scss'
+import productImage from '../../assets/461087521_843841854602360_6475783316939153006_n.png'
+import checkIcon from '../../assets/svg/check.svg'
+import minusIcon from '../../assets/svg/minus.svg'
+import plusIcon from '../../assets/svg/plus.svg'
+import mopAtome from '../../assets/mop/atome.svg'
+import mopVisa from '../../assets/mop/visa-mastercard.png'
+import mopGcash from '../../assets/mop/paymongo_gcash.png'
+import mopGrab from '../../assets/mop/paymongo_grab_pay.png'
+import mopMaya from '../../assets/mop/Maya_logo.png'
+import mopBpi from '../../assets/mop/bpi.png'
+import mopBillease from '../../assets/mop/billease.svg'
 
 const ITEM = {
   category: 'CSA Boxes',
@@ -47,7 +58,7 @@ function Product() {
       <section className={s.product}>
         <div className="container">
           <div className={s.left}>
-            <img src="/src/assets/461087521_843841854602360_6475783316939153006_n.png" loading="lazy" alt="product" />
+            <img src={productImage} loading="lazy" alt="product" />
           </div>
           <div className={s.right}>
             <h1>Furry Friends Box</h1>
@@ -62,7 +73,7 @@ function Product() {
                   return (
                     <li key={name} className={cn({[s.selected]: isSelected})} aria-selected={isSelected}>
                       <div className={s.checkMark} aria-hidden>
-                        <img src="/src/assets/svg/check.svg" loading="lazy" alt="check" />
+                        <img src={checkIcon} loading="lazy" alt="check" />
                       </div>
                       <button onClick={() => setSelectedVariant(name)}>{name}</button>
                     </li>
@@ -77,13 +88,13 @@ function Product() {
               <div className='flex-col gap-10'>
                 <div className={s.quantityInput}>
                   <button onClick={() => handleQuantityChange(-1)}>
-                    <img src="/src/assets/svg/minus.svg" loading="lazy" alt="minus" />
+                    <img src={minusIcon} loading="lazy" alt="minus" />
                   </button>
                   <div className={s.inputCont}>
                     <input type="number" name='quantity' ref={quantityRef} min={0} defaultValue={0} />
                   </div>
                   <button onClick={() => handleQuantityChange(1)}>
-                    <img src="/src/assets/svg/plus.svg" loading="lazy" alt="plus" />
+                    <img src={plusIcon} loading="lazy" alt="plus" />
                   </button>
                 </div>
                 <span>100 in stock</span>
@@ -97,25 +108,25 @@ function Product() {
             </button>
             <div className={s.mop}>
               <figure>
-                <img src="/src/assets/mop/atome.svg" loading="lazy" alt="atome" />
+                <img src={mopAtome} loading="lazy" alt="atome" />
               </figure>
               <figure>
-                <img src="/src/assets/mop/visa-mastercard.png" loading="lazy" alt="visa" />
+                <img src={mopVisa} loading="lazy" alt="visa" />
               </figure>
               <figure>
-                <img src="/src/assets/mop/paymongo_gcash.png" loading="lazy" alt="gcash" />
+                <img src={mopGcash} loading="lazy" alt="gcash" />
               </figure>
               <figure>
-                <img src="/src/assets/mop/paymongo_grab_pay.png" loading="lazy" alt="grab pay" />
+                <img src={mopGrab} loading="lazy" alt="grab pay" />
               </figure>
               <figure>
-                <img src="/src/assets/mop/Maya_logo.png" loading="lazy" alt="maya" />
+                <img src={mopMaya} loading="lazy" alt="maya" />
               </figure>
               <figure>
-                <img src="/src/assets/mop/bpi.png" loading="lazy" alt="bpi" />
+                <img src={mopBpi} loading="lazy" alt="bpi" />
               </figure>
               <figure>
-                <img src="/src/assets/mop/billease.svg" loading="lazy" alt="billease" />
+                <img src={mopBillease} loading="lazy" alt="billease" />
               </figure>
             </div>
           </div>
