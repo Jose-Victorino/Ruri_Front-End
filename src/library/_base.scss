@@ -12,6 +12,7 @@ $sz-24-28: clamp(24px, 0.625rem + 2.5vw, 28px);
 $sz-20-24: clamp(20px, 0.375rem + 2.5vw, 24px);
 $sz-16-20: clamp(16px, 0.125rem + 2.5vw, 20px);
 $sz-14-16: clamp(14px, 0.4375rem + 1.25vw, 16px);
+$sz-12-16: clamp(12px, -0.25rem + 2.8571vw, 16px);
 $sz-12-14: clamp(12px, 0.3125rem + 1.25vw, 14px);
 $sz-10-12: clamp(10px, 0.1875rem + 1.25vw, 12px);
 
@@ -40,26 +41,15 @@ $secondary-color: hsl(38, 95%, 52%);
 $highlight-color: hsl(132, 33%, 81%);
 
 $primary-light: color.scale($primary-color, $lightness: 15%);
+$primary-dark: color.scale($primary-color, $lightness: -15%);
+$secondary-light: color.scale($secondary-color, $lightness: 15%);
+$secondary-dark: color.scale($secondary-color, $lightness: -15%);
 
 $link-color: $secondary-color;
 
 $success-color: hsl(120, 52%, 56%);
 $warning-color: hsl(50, 87%, 56%);
 $error-color: hsl(0, 52%, 56%);
-
-$icon-light: hsl(214, 13%, 80%);
-$icon-dark: hsl(214, 13%, 21%);
-
-
-// paddings
-$btn-r-sm: 0.5em 0.75em;
-$btn-r-md: 0.75em 1em;
-$btn-r-lg: 1em 1.5em;
-
-$pad-r-sm: 0.75em;
-$pad-r-md: 1em;
-$pad-r-lg: 1.25em;
-
 
 @mixin pos-absolute-y-center(){
   position: absolute;

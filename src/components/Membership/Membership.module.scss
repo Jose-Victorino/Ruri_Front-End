@@ -1,0 +1,123 @@
+@use '@/library/base' as base;
+
+.hero{
+  background-image: url("@/assets/viber_image_2024-09-04_14-08-36-017.jpg");
+  background-position: center center;
+  display: flex;
+  align-items: center;
+  height: 75vh;
+  height: 75dvh;
+  
+  & > div{
+    background: white;
+    width: 50%;
+    padding: 30px 40px 40px;
+    border-radius: 0 20px 20px 0;
+  }
+}
+
+.testaments{
+  padding-block: 80px;
+
+  .testamentList{
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+    padding-left: 30px;
+    border-left: 2px solid base.$primary-dark;
+
+    li{
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      &::after{
+        content: '';
+        position: absolute;
+        top: 0.5em;
+        left: -30px;
+        transform: translateX(calc(-50% - 1px));
+        background: base.$primary-dark;
+        height: 1em;
+        width: 1em;
+      }
+    }
+    h2{
+      color: base.$primary-dark;
+      font-size: 2em;
+      line-height: 1;
+    }
+  }
+}
+
+.memberships{
+  padding-block: 80px;
+
+  h2{
+    text-align: center;
+  }
+  .description{
+    max-width: 870px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 25px;
+  }
+  ul{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+}
+
+.benefits{
+  padding-block: 80px;
+
+  .benefitList{
+    display: grid;
+    grid-template-columns: 1fr;
+    border-radius: 20px;
+    overflow: hidden;
+
+    li{
+      background: base.$gs-w-90;
+      display: flex;
+      gap: 20px;
+      padding: 30px;
+      align-items: center;
+
+      &:not(:first-child){
+        border-top: 1px solid base.$gs-w-60;
+      }
+
+      svg{
+        height: 70px;
+        width: 70px;
+      }
+    }
+  }
+}
+@media(max-width: 980px){
+  .hero{
+
+    & > div{
+      background: rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+      border-radius: 0;
+      color: white;
+
+    }
+  }
+  .memberships ul{
+    column-gap: 15px;
+  }
+}
+@media(max-width: 780px){
+  .memberships ul{
+    grid-template-columns: 1fr;
+  }
+}

@@ -9,7 +9,13 @@ export default defineConfig({
       "@": '/src'
     }
   },
+  build: {
+    outDir: 'dist',
+    sourcemap: false
+  },
   preview: {
+    host: '0.0.0.0',
+    port: process.env.PORT || 3000,
     allowedHosts: ['ruri-front-end.onrender.com']
   }
 })

@@ -4,7 +4,7 @@
   background: base.$primary-color;
 }
 
-:is(.top, .bottom) > *{
+:is(.top, .bottom) > div{
   display: flex;
   align-items: center;
 }
@@ -12,9 +12,9 @@
 .top{
   border-bottom: 2px solid base.$highlight-color;
 
-  & > *{
-    justify-content: end;
-    gap: 40px;
+  & > div{
+    justify-content: space-between;
+    gap: 30px;
 
     .navLinks a{
       padding-block: 13px;
@@ -43,8 +43,12 @@
     }
   }
 }
-.bottom > *{
-  justify-content: space-between;
+.bottom{
+  height: 66px;
+
+  & > div{
+    justify-content: space-between;
+  }
 
   .logo img{
     height: 45px;
@@ -59,13 +63,12 @@
     align-items: center;
     gap: 15px;
     height: 40px;
-    width: 350px;
+    width: 330px;
     border-radius: 20px;
     padding-inline: 20px;
 
     input{
       background: none;
-      font-size: 16px;
       border: none;
       width: 100%;
     }
@@ -94,3 +97,112 @@
   }
 }
 
+.burger{
+  display: none;
+  background: none;
+  border: none;
+
+  svg{
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.mobileMenu{
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+  z-index: 60;
+  transform: translateX(-100%);
+  transition: transform 0.4s;
+
+  .mobileInner{
+    background: base.$primary-light;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding-block: 20px;
+    height: 100vh;
+    height: 100dvh;
+    width: 80vw;
+    max-width: 280px;
+    box-shadow: -8px 0 24px rgba(0, 0, 0, 0.2);
+
+    .closeCont{
+      display: flex;
+      justify-content: end;
+      padding-inline: 20px;
+
+      svg{
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    .searchCont{
+      padding-inline: 20px;
+    }
+    .mobileSearch{
+      background: base.$gs-w-100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      height: 40px;
+      padding-inline: 12px;
+      border-radius: 4px;
+
+      input{
+        background: none;
+        border: none;
+        width: 100%;
+      }
+
+      img{
+        height: 20px;
+        width: 20px;
+      }
+    }
+
+    .mobileNavLinks{
+      display: flex;
+      flex-direction: column;
+
+      li{ display: block; }
+      a{
+        display: flex;
+        color: white;
+        font-size: 18px;
+        padding: 0.5em 1em;
+        width: 100%;
+
+        &.active{
+          color: base.$link-color;
+        }
+      }
+    }
+  }
+}
+
+
+@media (max-width: 980px){
+  .mainNav{ display: none; }
+  .top > div{
+    justify-content: flex-end;
+  }
+  .bottom{
+    > div{ position: relative; }
+    .searchBar{ display: none; }
+  }
+
+  .burger{ display: flex; }
+
+  .mobileMenu{
+    display: block;
+    
+    &.open{
+      transform: translateX(0%);
+    }
+  }
+}

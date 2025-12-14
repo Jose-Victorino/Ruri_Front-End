@@ -7,14 +7,14 @@ function Item() {
   return (
     <li className={s.item}>
       <div className={s.imgCont}>
-        <Link>
-          
+        <Link to='/product/asd' >
+          {/* <img src={``} alt={``} /> */}
         </Link>
       </div>
       <div className={s.textCont}>
         <div className='flex-col'>
-          <b>asdasdasdawd</b>
-          <span>1000</span>
+          <b>Lorem, ipsum.</b>
+          <span>{`₱${1000}`}</span>
         </div>
         <button>
           <img src="/src/assets/svg/cart-plus.svg" loading="lazy" alt="add-to-cart" />

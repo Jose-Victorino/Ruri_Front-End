@@ -57,6 +57,20 @@
   .gap-#{$i * 5}{
     gap: #{$i * 5}px;
   }
+  
+  .mb-#{$i * 5}{
+    margin-bottom: #{$i * 5}px;
+  }
+
+  .pad-#{$i * 5}{
+    padding: #{$i * 5}px;
+  }
+  .pad-block-#{$i * 5}{
+    padding-block: #{$i * 5}px;
+  }
+  .pad-inline-#{$i * 5}{
+    padding-inline: #{$i * 5}px;
+  }
 }
 
 
