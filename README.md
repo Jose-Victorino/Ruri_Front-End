@@ -1,10 +1,10 @@
 ## TODO:
+- [-] `CART` UI **(Shipping calculation pending)**
+- [ ] `ITEM` - add to cart functionality
 - [ ] `STORE LOCATOR` UI & functionality
-- [ ] `CART` UI
-- [ ] `ITEM`, `PRODUCT` - add to cart functionality
 - [ ] `CHECKOUT` UI & functionality
 - [ ] `PRODUCT` - review UI & functionality
-- [ ] `TRACK ORDER` - functionality
+- [ ] `TRACK ORDER` - functionality **(Need simulation of tracking)**
 
 # Ruri
 
@@ -38,7 +38,7 @@ npm install
 
 Start the dev server:
 ```bash
-npm run dev
+npm start
 ```
 
 Build for production:

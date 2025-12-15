@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useParams, NavLink, Routes, Route, useNavigate } from 'react-router-dom'
+import { useParams, NavLink, useNavigate } from 'react-router-dom'
 import cn from 'classnames'
 
 import s from './Category.module.scss'
@@ -39,9 +39,4 @@ function Category() {
   )
 }
 
-          // <select>
-          //   {SORT_BY_TYPES.map((sortName) =>
-          //     <option key={sortName}>{sortName}</option>
-          //   )}
-          // </select>
 export default Category

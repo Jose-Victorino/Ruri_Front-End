@@ -9,7 +9,7 @@ function Login() {
   return (
     <section className={s.authWrapper}>
       <div className={s.left}>
-        <img className={s.logo} src={logo} alt="logo" />
+        <img className={s.logo} src={logo} loading="lazy" alt="logo" />
       </div>
       <div className={s.right}>
         <Outlet />

@@ -4,7 +4,7 @@ import cn from 'classnames'
 
 import s from './TrackOrder.module.scss'
 
-import magnifyingGlass from '../../assets/svg/magnifying-glass.svg'
+import magnifyingGlass from '@/assets/svg/magnifying-glass.svg'
 
 function TrackOrder() {
   document.title = "RURI CLUB | Track Order"
@@ -25,7 +25,7 @@ function TrackOrder() {
           <div>
             <div className={s.searchBar}>
               <input type="text" name='orderID' placeholder='Enter Order ID'/>
-              <img alt="search" src={magnifyingGlass}></img>
+              <img alt="search" loading="lazy" src={magnifyingGlass}></img>
             </div>
             <div className={s.body}>
 

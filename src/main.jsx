@@ -12,6 +12,7 @@ import FAQs from "@/components/FAQs/FAQs"
 import TrackOrder from "@/components/TrackOrder/TrackOrder"
 import Category from '@/components/Shop/Category'
 import Product from '@/components/Shop/Product'
+import Cart from '@/components/Shop/Cart'
 import AuthLayout from '@/components/Auth/AuthLayout'
 import Login from '@/components/Auth/Login'
 import ForgotPassword from '@/components/Auth/ForgotPassword'
@@ -28,6 +29,7 @@ createRoot(document.getElementById('root')).render(
           <Route path='track-order' element={<TrackOrder />}/>
           <Route path='category/:categoryName' element={<Category />}/>
           <Route path='product/:productName' element={<Product /> }/>
+          <Route path='cart' element={<Cart />}/>
         </Route>
         <Route path='/auth' element={<AuthLayout />}>
           <Route path='login' element={<Login />}/>

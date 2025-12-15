@@ -1,0 +1,137 @@
+@use '@/library/base' as base;
+
+body:has(.cart){
+  background: base.$gs-w-80;
+}
+
+.header{
+
+  & > div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  a{
+
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+  
+}
+
+.cart{
+
+  & > div{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: white;
+    padding: 20px;
+  }
+
+  table{
+    width: 100%;
+
+    th{
+      text-align: start;
+      border-bottom: 1px solid black;
+      color: black;
+      padding: 4px;
+
+      &:nth-child(1){
+        width: 50%;
+      }
+      &:nth-child(2){
+        width: 20%;
+      }
+      &:nth-child(3){
+        width: 15%;
+      }
+      &:nth-child(4){
+        width: 15%;
+      }
+    }
+    td{
+      padding: 20px 10px;
+    }
+
+    .product{
+      display: flex;
+      gap: 15px;
+
+      img{
+        height: 80px;
+        width: 80px;
+      }
+
+      a{
+        font-weight: bold;
+
+        &:hover{
+          text-decoration: underline;
+        }
+      }
+      span{
+        color: base.$gs-b-40
+      }
+    }
+    
+    .removeBtn{
+      height: fit-content;
+      width: fit-content;
+      padding: 6px;
+
+      img{
+        height: base.$sz-12-14;
+      }
+    }
+  }
+
+  .couponCont{
+    display: flex;
+    gap: 15px;
+
+    input{
+
+      border-color: base.$gs-b-40;
+      padding: 6px;
+    }
+    button{
+      background: base.$primary-light;
+      color: white;
+      padding: 0.5em 1em;
+      border-radius: 6px;
+      &:hover{
+        background: base.$primary-color;
+      }
+    }
+  }
+}
+
+.checkout{
+  
+  & > div{
+    background: white;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+  }
+  .subtotal{
+    color: base.$primary-light;
+    font-weight: bold;
+    font-size: base.$sz-20-24;
+  }
+
+  .checkoutBtn{
+    background: base.$primary-light;
+    color: white;
+    padding: 0.75em 1.25em;
+
+    &:hover{
+      background: base.$primary-color;
+    }
+  }
+}

@@ -4,9 +4,9 @@ import { Formik, Field, Form } from 'formik'
 
 import s from './SignUp.module.scss'
 
-import arrowLeft from '../../assets/svg/arrow-left.svg'
-import eyeIcon from '../../assets/svg/eye.svg'
-import eyeSlashIcon from '../../assets/svg/eye-slash.svg'
+import arrowLeft from '@/assets/svg/arrow-left.svg'
+import eyeIcon from '@/assets/svg/eye.svg'
+import eyeSlashIcon from '@/assets/svg/eye-slash.svg'
 
 const MEMBERSHIPS = ['seed', 'tree', 'forest'];
 
@@ -40,7 +40,7 @@ function SignUp() {
             <Form className={s.form}>
               <button type="button" className={s.goBackbtn} onClick={() => navigate(-1)}>
                 <div>
-                  <img src={arrowLeft} alt="arrow" />
+                  <img src={arrowLeft} loading="lazy" alt="arrow" />
                 </div>
                 <span>Go Back</span>
               </button>
@@ -55,7 +55,7 @@ function SignUp() {
                 <div style={{position: 'relative'}}>
                   <Field className={s.txtField} type={showPassword ? 'text' : 'password'} name='password' placeholder='Password' required/>
                   <button type='button' className={s.showPass} onClick={() => setShowPassword((prev) => !prev)}>
-                    <img src={showPassword ? eyeIcon : eyeSlashIcon} alt="eye" />
+                    <img src={showPassword ? eyeIcon : eyeSlashIcon} loading="lazy" alt="eye" />
                   </button>
                 </div>
                 <div>

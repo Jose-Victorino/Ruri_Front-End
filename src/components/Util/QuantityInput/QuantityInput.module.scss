@@ -1,0 +1,35 @@
+@use '@/library/base' as base;
+
+$border-color: base.$gs-w-60;
+
+.quantityInput{
+  display: flex;
+  align-items: center;
+  border: 1px solid $border-color;
+  width: fit-content;
+
+  & > *{
+    display: flex;
+  }
+  button{
+    padding: 8px;
+  }
+  input{
+    background: none;
+    text-align: center;
+    width: 4ch;
+    padding: 8px 4px;
+    border: none;
+    line-height: 1.15;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+  img{
+    height: 1.15em;
+    width: 1em;
+  }
+}

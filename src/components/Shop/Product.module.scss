@@ -50,6 +50,7 @@ body:has(.product){
 
     .mop{
       display: flex;
+      flex-wrap: wrap;
       gap: 10px;
 
       figure{
@@ -118,6 +119,9 @@ body:has(.product){
           border-color: base.$secondary-color;
         }
       }
+    }
+    .error{
+      color: base.$error-color;
     }
 
     .quantityInput{
@@ -200,4 +204,24 @@ body:has(.product){
   h3{
     font-size: base.$sz-16-20;
   }
+}
+
+@media(max-width: 780px){
+  .product{
+    & > div{
+      grid-template-columns: 1fr;
+    }
+    .left{
+      display: flex;
+      justify-content: center;
+      img{
+        max-height: 320px;
+        max-width: 320px;
+      }
+    }
+    .right{
+      justify-content: space-between;
+    }
+  }
+  
 }

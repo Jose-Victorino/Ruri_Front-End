@@ -1,8 +1,8 @@
 import React from 'react'
-import { useParams, NavLink, Link, Routes, Route, useNavigate } from 'react-router-dom'
+import { useParams, NavLink, Link, useNavigate } from 'react-router-dom'
 
 import s from './Item.module.scss'
-import cartPlus from '../../assets/svg/cart-plus.svg'
+import cartPlus from '@/assets/svg/cart-plus.svg'
 
 function Item() {
   return (

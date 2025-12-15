@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { NavLink } from 'react-router-dom'
+import { useState, useEffect, useRef } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { useGlobal } from '@/context/GlobalContext'
 import cn from 'classnames'
 
 import s from './Navigation.module.scss'
 
-import cartShopping from '../../assets/svg/cart-shopping.svg'
-import magnifyingGlass from '../../assets/svg/magnifying-glass.svg'
+import cartShopping from '@/assets/svg/cart-shopping.svg'
+import magnifyingGlass from '@/assets/svg/magnifying-glass.svg'
 
 const burgerSVG = <svg xmlns="http://www.w3.org/2000/svg" fill='white' viewBox="0 0 448 512">
   <path d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z"/>
@@ -16,10 +17,14 @@ const xMarkSVG = <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0
 </svg>
 
 function Navigation() {
+  const { state, dispatch } = useGlobal();
+  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false)
   const menuRef = useRef(null)
   const burgerRef = useRef(null)
   const closeBtnRef = useRef(null)
+
+  const itemsInCart = state.cart?.length || 0;
 
   const closeMenu = () => {
     if (menuRef.current && menuRef.current.contains(document.activeElement)) {
@@ -66,9 +71,9 @@ function Navigation() {
                 </li>
               </ul>
             </nav>
-            <button className={s.cart}>
+            <button className={s.cart} onClick={() => navigate('/cart')}>
               <img src={cartShopping} alt="cart" />
-              <span>0</span>
+              <span>{itemsInCart}</span>
             </button>
           </div>
         </div>
@@ -80,7 +85,7 @@ function Navigation() {
           </button>
           <div className={cn(s.logo, 'flex')}>
             <NavLink to='/' className='flex'>
-              <img src="/cropped-logo-600x203.png" alt="logo" />
+              <img src="/cropped-logo-600x203.png" loading="lazy" alt="logo" />
             </NavLink>
           </div>
           <nav>
@@ -110,11 +115,12 @@ function Navigation() {
           <div className={s.searchBar}>
             <input type="text" name='search' placeholder='Search...' autoComplete="false"/>
             <button>
-              <img src={magnifyingGlass} alt="search" />
+              <img src={magnifyingGlass} loading="lazy" alt="search" />
             </button>
           </div>
         </div>
       </section>
+
       <div ref={menuRef} className={cn(s.mobileMenu, { [s.open]: menuOpen })} role="dialog" aria-hidden={!menuOpen} inert={!menuOpen}>
         <div className={s.mobileInner}>
           <div className={cn(s.closeCont)}>
@@ -124,7 +130,7 @@ function Navigation() {
             <div className={s.mobileSearch}>
               <input type="text" name='search' placeholder='Search...' autoComplete="false"/>
               <button>
-                <img src={magnifyingGlass} alt="search" />
+                <img src={magnifyingGlass} loading="lazy" alt="search" />
               </button>
             </div>
           </div>
