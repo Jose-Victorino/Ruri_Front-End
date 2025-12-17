@@ -4,11 +4,11 @@ import cn from 'classnames'
 
 import s from './Footer.module.scss'
 
-import facebookIcon from '@/assets/svg/facebook.svg'
-import xIcon from '@/assets/svg/x-twitter.svg'
-import instagramIcon from '@/assets/svg/instagram.svg'
-import tiktokIcon from '@/assets/svg/tiktok.svg'
-import youtubeIcon from '@/assets/svg/youtube.svg'
+import facebookIcon from 'svg/facebook.svg'
+import xIcon from 'svg/x-twitter.svg'
+import instagramIcon from 'svg/instagram.svg'
+import tiktokIcon from 'svg/tiktok.svg'
+import youtubeIcon from 'svg/youtube.svg'
 
 import mopAtome from '@/assets/mop/atome.svg'
 import mopVisa from '@/assets/mop/visa-mastercard.png'
@@ -27,19 +27,33 @@ function Footer() {
             <div>
               <h2>ALL POLICY</h2>
               <ul style={{textAlign: 'center'}}>
-                <li>Spoilage Policy</li>
-                <li>Allergy Disclaimer</li>
-                <li>Privacy Policy</li>
-                <li>Weight Notice</li>
-                <li>Return and Refund Policy</li>
+                <li>
+                  <Link>Spoilage Policy</Link>
+                </li>
+                <li>
+                  <Link>Allergy Disclaimer</Link>
+                </li>
+                <li>
+                  <Link>Privacy Policy</Link>
+                </li>
+                <li>
+                  <Link>Weight Notice</Link>
+                </li>
+                <li>
+                  <Link>Return and Refund Policy</Link>
+                </li>
               </ul>
             </div>
             <div>
               <h2>CONTACT US</h2>
               <div className='flex-col gap-15'>
                 <ul className={s.contacts}>
-                  <li>Email: info@ruralrisingph.com</li>
-                  <li>Phone: 0917 502 7787</li>
+                  <li>
+                    <a href="mailto:info@ruralrisingph.com">Email: info@ruralrisingph.com</a>
+                  </li>
+                  <li>
+                    <a href='tel:09175027787'>Phone: 0917 502 7787</a>
+                  </li>
                 </ul>
                 <ul className={s.socmed}>
                   <li>

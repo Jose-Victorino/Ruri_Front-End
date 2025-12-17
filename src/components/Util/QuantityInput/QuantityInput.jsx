@@ -2,10 +2,10 @@ import { useRef } from 'react'
 
 import s from './QuantityInput.module.scss'
 
-import minusIcon from '@/assets/svg/minus.svg'
-import plusIcon from '@/assets/svg/plus.svg'
+import minusIcon from 'svg/minus.svg'
+import plusIcon from 'svg/plus.svg'
 
-function QuantityInput({state, setState, min, productID}) {
+function QuantityInput({state, setState, min, productID, disabled = false}) {
   const inputRef = useRef(null);
   
   const handleQuantityChange = (dir) => {
@@ -16,13 +16,21 @@ function QuantityInput({state, setState, min, productID}) {
 
   return (
     <div className={s.quantityInput}>
-      <button onClick={() => handleQuantityChange(-1)}>
+      <button onClick={() => handleQuantityChange(-1)} disabled={disabled}>
         <img src={minusIcon} loading="lazy" alt="minus" />
       </button>
       <div className={s.inputCont}>
-        <input type="number" name={`quantity-${productID}`} ref={inputRef} min={min || 0} defaultValue={state} onChange={(e) => setState(parseInt(e.target.value))}/>
+        <input
+          ref={inputRef}
+          type="number"
+          name={`quantity-${productID}`}
+          min={min || 0}
+          defaultValue={state}
+          onChange={(e) => setState(parseInt(e.target.value))}
+          disabled={disabled}
+        />
       </div>
-      <button onClick={() => handleQuantityChange(1)}>
+      <button onClick={() => handleQuantityChange(1)} disabled={disabled}>
         <img src={plusIcon} loading="lazy" alt="plus" />
       </button>
     </div>

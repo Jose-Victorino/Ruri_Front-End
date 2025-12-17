@@ -4,7 +4,7 @@ import cn from 'classnames'
 
 import s from './TrackOrder.module.scss'
 
-import magnifyingGlass from '@/assets/svg/magnifying-glass.svg'
+import magnifyingGlass from 'svg/magnifying-glass.svg'
 
 function TrackOrder() {
   document.title = "RURI CLUB | Track Order"

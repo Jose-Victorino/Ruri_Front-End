@@ -1,34 +1,34 @@
 @use '@/library/base' as base;
 
+.goBackbtn{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+
+  & > div{
+    display: flex;
+    background: base.$gs-w-80;
+    padding: 8px;
+    border-radius: 6px;
+  }
+  img{
+    height: 1.2em;
+    width: 1.2em;
+  }
+  span{
+    white-space: nowrap;
+  }
+  &:hover > div{
+    background: base.$gs-w-70;
+  }
+}
+
 .form{
   display: flex;
   flex-direction: column;
   gap: 20px;
   width: 100%;
-
-  .goBackbtn{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-
-    & > div{
-      display: flex;
-      background: base.$gs-w-80;
-      padding: 8px;
-      border-radius: 6px;
-    }
-    img{
-      height: 1.2em;
-      width: 1.2em;
-    }
-    span{
-      white-space: nowrap;
-    }
-    &:hover > div{
-      background: base.$gs-w-70;
-    }
-  }
 
   h1{
     font-size: base.$sz-24-28;

@@ -6,7 +6,8 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": '/src'
+      "@": '/src',
+      "svg": '/src/assets/svg',
     }
   },
   build: {

@@ -4,16 +4,22 @@ import { Formik, Field, Form } from 'formik'
 
 import s from './Login.module.scss'
 
-import arrowLeft from '@/assets/svg/arrow-left.svg'
-import eyeIcon from '@/assets/svg/eye.svg'
-import eyeSlashIcon from '@/assets/svg/eye-slash.svg'
+import arrowLeft from 'svg/arrow-left.svg'
+import eyeIcon from 'svg/eye.svg'
+import eyeSlashIcon from 'svg/eye-slash.svg'
 
 function Login() {
-  const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);  
+  const navigate = useNavigate()
+  const [showPassword, setShowPassword] = useState(false)
 
   return (
     <>
+      <button type="button" className={s.goBackbtn} onClick={() => navigate(-1)}>
+        <div>
+          <img src={arrowLeft} loading="lazy" alt="arrow" />
+        </div>
+        <span>Go Back</span>
+      </button>
       <Formik
         initialValues={{
           email: '',
@@ -24,12 +30,6 @@ function Login() {
         {({ values, setFieldValue, errors, touched }) => {
           return (
             <Form className={s.form}>
-              <button type="button" className={s.goBackbtn} onClick={() => navigate(-1)}>
-                <div>
-                  <img src={arrowLeft} loading="lazy" alt="arrow" />
-                </div>
-                <span>Go Back</span>
-              </button>
               <h1 className='mb-15'>Login</h1>
               <div className={s.top}>
                 <div>
@@ -48,7 +48,7 @@ function Login() {
                   <span>Remember me</span>
                 </label>
                 <div>
-                  <NavLink>Forgot your password?</NavLink>
+                  <NavLink to='/auth/login/forgot-password'>Forgot your password?</NavLink>
                 </div>
               </div>
               <button className={s.submitBtn} type='submit'>Login</button>

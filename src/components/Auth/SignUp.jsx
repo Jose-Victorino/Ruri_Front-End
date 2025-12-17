@@ -4,18 +4,18 @@ import { Formik, Field, Form } from 'formik'
 
 import s from './SignUp.module.scss'
 
-import arrowLeft from '@/assets/svg/arrow-left.svg'
-import eyeIcon from '@/assets/svg/eye.svg'
-import eyeSlashIcon from '@/assets/svg/eye-slash.svg'
+import arrowLeft from 'svg/arrow-left.svg'
+import eyeIcon from 'svg/eye.svg'
+import eyeSlashIcon from 'svg/eye-slash.svg'
 
 const MEMBERSHIPS = ['seed', 'tree', 'forest'];
 
 function SignUp() {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const [showPassword, setShowPassword] = useState(false);  
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const [showPassword, setShowPassword] = useState(false) 
 
-  const membershipParam = searchParams.get('membership');
+  const membershipParam = searchParams.get('membership')
 
   const onSubmit = ({firstName, lastName, email, password, membership, phoneNumber, birthDay}) => {
     
@@ -23,6 +23,12 @@ function SignUp() {
   
   return (
     <>
+      <button type="button" className={s.goBackbtn} onClick={() => navigate(-1)}>
+        <div>
+          <img src={arrowLeft} loading="lazy" alt="arrow" />
+        </div>
+        <span>Go Back</span>
+      </button>
       <Formik
         initialValues={{
           firstName: '',
@@ -38,12 +44,6 @@ function SignUp() {
         {({ values, setFieldValue, errors, touched }) => {
           return (
             <Form className={s.form}>
-              <button type="button" className={s.goBackbtn} onClick={() => navigate(-1)}>
-                <div>
-                  <img src={arrowLeft} loading="lazy" alt="arrow" />
-                </div>
-                <span>Go Back</span>
-              </button>
               <h1 className='mb-15'>Sign up</h1>
               <div className='flex-col gap-15'>
                 <div className='flex gap-15'>

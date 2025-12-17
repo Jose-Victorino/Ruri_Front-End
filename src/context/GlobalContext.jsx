@@ -19,9 +19,21 @@ function reducer(state, action) {
     case ACTIONS.ADD_TO_CART:
       return { ...state, cart: payload || [] };
     case ACTIONS.UPDATE_ITEM_QTY:
-      return { ...state, cart: payload || [] };
+      return {
+        ...state,
+        cart: state.cart.map(item =>
+          item.productId === payload.productId && item.variantId === payload.variantId
+            ? { ...item, quantity: payload.quantity }
+            : item
+        )
+      };
     case ACTIONS.REMOVE_FROM_CART:
-      return { ...state, cart: payload || [] };
+      return {
+        ...state,
+        cart: state.cart.filter(
+          item => !(item.productId === payload.productId && item.variantId === payload.variantId)
+        )
+      };
     default:
       return state;
   }

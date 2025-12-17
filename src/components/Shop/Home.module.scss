@@ -5,6 +5,7 @@
   background-size: cover;
   position: relative;
   height: calc(100vh - 117.6px);
+  height: calc(100dvh - 117.6px);
   color: white;
 
   &::after{
@@ -79,6 +80,7 @@
       background-color: hsl(0, 0%, 90%);
       height: 100%;
       flex-grow: 1;
+      cursor: pointer;
     }
   }
 }
@@ -89,7 +91,7 @@
   ul{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
-    gap: 20px;
+    gap: 30px 20px;
   }
 }
 
@@ -143,6 +145,7 @@
   .shop{
     ul{
       grid-template-columns: 1fr 1fr;
+      gap: 20px 15px;
     }
   }
 }

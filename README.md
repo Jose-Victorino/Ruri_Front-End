@@ -1,10 +1,11 @@
 ## TODO:
-- [-] `CART` UI **(Shipping calculation pending)**
-- [ ] `ITEM` - add to cart functionality
+- [x] `CART` UI
+- [x] `ITEM` - add to cart functionality
+- [ ] `PRODUCT` - review UI & functionality
 - [ ] `STORE LOCATOR` UI & functionality
 - [ ] `CHECKOUT` UI & functionality
-- [ ] `PRODUCT` - review UI & functionality
 - [ ] `TRACK ORDER` - functionality **(Need simulation of tracking)**
+- [x] `LOGIN` - forgot password UI
 
 # Ruri
 

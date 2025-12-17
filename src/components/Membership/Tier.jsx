@@ -4,9 +4,9 @@ import cn from 'classnames'
 
 import s from './Tier.module.scss'
 
-import tierSeed from '@/assets/svg/tier-seed.svg'
-import tierTree from '@/assets/svg/tier-tree.svg'
-import tierForest from '@/assets/svg/tier-forest.svg'
+import tierSeed from 'svg/tier-seed.svg'
+import tierTree from 'svg/tier-tree.svg'
+import tierForest from 'svg/tier-forest.svg'
 
 const TIER_ICONS = {
   seed: tierSeed,

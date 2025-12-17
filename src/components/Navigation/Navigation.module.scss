@@ -15,30 +15,60 @@
   & > div{
     justify-content: space-between;
     gap: 30px;
+  }
 
-    .navLinks a{
+  .navLinks{
+    a{
+      display: flex;
       padding-block: 13px;
     }
-    .cart{
-      position: relative;
+    img{
+      height: 1.5em;
+      width: 1.5em;
+    }
+  }
+  .cart{
+    position: relative;
 
-      img{
-        height: 25px;
-        width: 25px;
-      }
+    img{
+      height: 1.75em;
+      width: 1.75em;
+    }
 
-      span{
-        position: absolute;
-        bottom: 50%;
-        right: 0;
-        transform: translateX(50%);
-        background: base.$secondary-color;
-        color: white;
-        font-weight: bold;
-        line-height: 1.2;
-        font-size: 0.8em;
-        padding: 0 4px;
-        border-radius: 0.5em;
+    div{
+      background: base.$secondary-color;
+      position: absolute;
+      bottom: 50%;
+      right: 0;
+      transform: translateX(50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      height: 1.25em;
+      line-height: 1;
+      aspect-ratio: 1;
+      border-radius: 50%;
+    }
+  }
+
+  .authNav{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    
+    img{
+      height: 1.5em;
+      width: 1.5em;
+    }
+    a{
+      display: flex;
+      color: white;
+      padding-block: 13px;
+
+      &:hover{
+        text-decoration: underline;
       }
     }
   }
@@ -53,9 +83,12 @@
   .logo img{
     height: 45px;
   }
-  .navLinks a{
-    padding-block: 21px;
+  .navLinks{
+    a{
+      padding-block: 21px;
+    }
   }
+  
   .searchBar{
     background: base.$gs-w-100;
     display: flex;
@@ -63,7 +96,7 @@
     align-items: center;
     gap: 15px;
     height: 40px;
-    width: 330px;
+    max-width: 280px;
     border-radius: 20px;
     padding-inline: 20px;
 

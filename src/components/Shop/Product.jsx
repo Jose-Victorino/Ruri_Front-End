@@ -1,14 +1,14 @@
 import { useState } from 'react'
-import { useParams, NavLink, Link, useNavigate } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
+import { useGlobal, ACTIONS } from '@/context/GlobalContext';
 import cn from 'classnames'
 
 import QuantityInput from '@/components/Util/QuantityInput/QuantityInput'
-import { useGlobal, ACTIONS } from '@/context/GlobalContext';
 
 import s from './Product.module.scss'
 
 import productImage from '@/assets/461087521_843841854602360_6475783316939153006_n.png'
-import checkIcon from '@/assets/svg/check.svg'
+import checkIcon from 'svg/check.svg'
 import mopAtome from '@/assets/mop/atome.svg'
 import mopVisa from '@/assets/mop/visa-mastercard.png'
 import mopGcash from '@/assets/mop/paymongo_gcash.png'
@@ -16,112 +16,109 @@ import mopGrab from '@/assets/mop/paymongo_grab_pay.png'
 import mopMaya from '@/assets/mop/Maya_logo.png'
 import mopBpi from '@/assets/mop/bpi.png'
 import mopBillease from '@/assets/mop/billease.svg'
+import ruriCoin from '@/assets/svg/ruri-coin.svg'
 
-const ITEM = {
-  name: 'Furry Friends Box',
-  category: 'CSA Boxes',
-  variants: [
-    {
-      name: 'Daily Bowl (10kg)',
-      price: 799,
-      stock: 3,
-    },
-    {
-      name: 'Shelter Pack (30kg)',
-      price: 1999,
-      stock: 10,
-    },
-  ]
-}
+const HtmlContentComponent = ({ htmlString }) => {
+  return (htmlString !== '' && <div dangerouslySetInnerHTML={{ __html: htmlString }} />);
+};
 
-// const ITEM = {
-//   name: 'Adlai',
-//   category: 'Rescue Buy',
-//   price: 499,
-//   stock: 17,
-// }
+function Product() {  
+  const { state, dispatch } = useGlobal()
+  const { productName } = useParams()
 
-function Product() {
-  document.title = `${ITEM.name} | RURI CLUB`
-  
   const [selectedVariant, setSelectedVariant] = useState(null)
   const [quantity, setQuantity] = useState(1)
-  const { state, dispatch } = useGlobal();
   const [variantError, setVariantError] = useState('')
   const [quantityError, setQuantityError] = useState('')
+
+  const product = state.PRODUCTS.find((p) => p.slug === productName)
+  const { productId, name, category, description, variants } = product;
+
+  document.title = `${name} | RURI CLUB`
+
+  const isOneVariant = variants.length === 1
+  const parseDesc = description && description.split('\n ').map((d) => `<p>${d}</p>`).join('<br />')
   
-  const hasVariants = Array.isArray(ITEM.variants) && ITEM.variants.length > 0
-  const prices = hasVariants ? ITEM.variants.map(v => v.price) : []
-  const minPrice = hasVariants ? Math.min(...prices) : ITEM.price || 0
-  const maxPrice = hasVariants ? Math.max(...prices) : ITEM.price || 0
+  if(isOneVariant && selectedVariant === null) {
+    setSelectedVariant(variants[0])
+  }
+  
+  const getPrice = () => {
+    if(isOneVariant)
+      return `₱${variants[0].price.toLocaleString()}`
 
-  const selectedVariantObj = hasVariants ? ITEM.variants.find(v => v.name === selectedVariant) || null : null
-  const priceDisplay = hasVariants 
-    ? (selectedVariantObj
-        ? `₱${selectedVariantObj.price}`
-        : (minPrice === maxPrice ? `₱${minPrice.toLocaleString()}` : `₱${minPrice.toLocaleString()} - ₱${maxPrice.toLocaleString()}`)
-      )
-    : `₱${minPrice.toLocaleString()}`
-  const totalStock = hasVariants ? ITEM.variants.reduce((acc, v) => acc + (v.stock || 0), 0) : (ITEM.stock || 0)
-  const stockDisplay = `${hasVariants && selectedVariantObj ? selectedVariantObj.stock : totalStock} in stock`
+    if(selectedVariant)
+      return `₱${selectedVariant.price.toLocaleString()}`
+    
+    const prices = variants.map(v => v.price)
+    const minPrice = Math.min(...prices).toLocaleString()
+    const maxPrice = Math.max(...prices).toLocaleString()
 
+    return `₱${minPrice} - ₱${maxPrice}`
+  }
+
+  const getRuriCoin = () => {
+    if (selectedVariant) {
+      const variant = variants.find(v => v.variantId === selectedVariant.variantId)
+      return variant?.ruriCoin || 0
+    }
+    return Math.max(...variants.map(v => v.ruriCoin))
+  }
+
+  const getStock = () => {
+    if (selectedVariant) {
+      const variant = variants.find(v => v.variantId === selectedVariant.variantId)
+      return variant?.stock || 0
+    }
+    return variants.reduce((acc, v) => acc + v.stock, 0)
+  }
+
+  const currentStock = getStock()
+  const isCurrentlyStocked = currentStock > 0
+  
+  const handleVariantState = (variant) => {
+    setSelectedVariant(variant)
+    setVariantError('')
+  }
+  
   const addToCart = () => {
-    if (hasVariants) {
-      if (!selectedVariant) {
-        setVariantError('Please select a variant.')
-        return;
-      }
+    if (!isOneVariant && !selectedVariant) {
+      setVariantError('Please select a variant')
+      return
     }
 
-    if (!quantity || Number(quantity) < 1) {
-      setQuantityError('Must add at least 1.')
-      return;
+    if (quantity < 1) {
+      setQuantityError('Quantity must be at least 1')
+      return
     }
 
-    const variantObj = selectedVariantObj;
-    const qty = Number(quantity);
-    const availableStock = hasVariants ? (variantObj ? variantObj.stock : 0) : (ITEM.stock || 0)
+    const variantId = isOneVariant ? variants[0].variantId : selectedVariant.variantId
+    const variant = variants.find(v => v.variantId === variantId)
 
-    if (qty > availableStock) {
-      setQuantityError(`Only ${availableStock} items in stock for this item.`)
-      return;
+    if (quantity > variant.stock && !variant.unlimitedStock) {
+      setQuantityError(`Only ${variant.stock} in stock`)
+      return
     }
 
-    try {
-      const key = 'ruri_cart';
-      const raw = localStorage.getItem(key);
-      const cart = raw ? JSON.parse(raw) : [];
-
-      const idx = cart.findIndex(it => {
-        if (hasVariants) return it.name === ITEM.name && it.variant?.name === variantObj?.name
-        return it.name === ITEM.name
-      });
-      if (idx > -1) {
-        const existing = cart[idx];
-        const cap = hasVariants ? variantObj.stock : (ITEM.stock || Infinity)
-        const newQty = Math.min((Number(existing.quantity) || 0) + qty, cap);
-        cart[idx] = { ...existing, quantity: newQty };
-      } else {
-        cart.push({
-          name: ITEM.name,
-          category: ITEM.category,
-          quantity: qty,
-          ...(hasVariants ? {
-            variant: { ...variantObj } 
-          } : {
-            price: ITEM.price,
-            stock: ITEM.stock,
-          }),
-        });
-      }
-
-      localStorage.setItem(key, JSON.stringify(cart));
-      dispatch({ type: ACTIONS.SET_CART, payload: cart });
-      alert('Added to cart');
-    } catch (e) {
-      console.error(e);
-      alert('Could not add to cart.');
+    const cartItem = {
+      productId,
+      variantId,
+      quantity
     }
+
+    const existingCartIndex = state.cart.findIndex(
+      item => item.productId === productId && item.variantId === variantId
+    )
+
+    let updatedCart
+    if (existingCartIndex > -1) {
+      updatedCart = [...state.cart]
+      updatedCart[existingCartIndex].quantity += quantity
+    } else {
+      updatedCart = [...state.cart, cartItem]
+    }
+
+    dispatch({ type: ACTIONS.ADD_TO_CART, payload: updatedCart })
   }
 
   return (
@@ -130,9 +127,9 @@ function Product() {
         <div className="container">
           <NavLink to='/'>Home</NavLink>
           <span className={s.divider}>/</span>
-          <NavLink to={`/category/${ITEM.category.toLowerCase().replaceAll(' ', '-')}`}>{ITEM.category}</NavLink>
+          <NavLink to={`/category/${category.toLowerCase().replaceAll(' ', '-')}`}>{category}</NavLink>
           <span className={s.divider}>/</span>
-          <strong>{ITEM.name}</strong>
+          <strong>{name}</strong>
         </div>
       </section>
       <section className={s.product}>
@@ -141,57 +138,78 @@ function Product() {
             <img src={productImage} loading="lazy" alt="product" />
           </div>
           <div className={s.right}>
-            <h1>Furry Friends Box</h1>
+            <h1>{name}</h1>
             <div className={s.priceCont}>
-              <p className={s.price}>{priceDisplay}</p>
+              <p className={s.price}>{getPrice()}</p>
             </div>
             <div className={s.grid}>
-              {hasVariants && (
-                <>
+              {!isOneVariant && 
+                <div>
                   <h4>Variants</h4>
                   <div className='flex-col gap-5'>
                     <ul className={s.variantList}>
-                      {ITEM.variants.map(({name, stock}) => {
-                          const isSelected = selectedVariant === name;
-                          return (
-                            <li key={name} className={cn({[s.selected]: isSelected})} aria-selected={isSelected}>
-                              <div className={s.checkMark} aria-hidden>
-                                <img src={checkIcon} loading="lazy" alt="check" />
-                              </div>
-                              <button onClick={() => { setSelectedVariant(name); setVariantError('') }}>{name}</button>
-                            </li>
-                          )
-                        })}
+                      {variants.map((v) => {
+                        const isSelected = selectedVariant?.variantId === v.variantId;
+                        return (
+                          <li key={v.variantId} className={cn({[s.selected]: isSelected})} aria-selected={isSelected}>
+                            <div className={s.checkMark} aria-hidden>
+                              <img src={checkIcon} loading="lazy" alt="check" />
+                            </div>
+                            <button onClick={() => handleVariantState(v)}>{v.label}</button>
+                          </li>
+                        )
+                      })}
                     </ul>
                     {variantError && <span className={s.error}>{variantError}</span>}
                   </div>
-                </>
-              )}
-
-              <h4>Delivery</h4>
-              <div>
-                <p>via Lalamove (₱250 base delivery fee)</p>
-              </div>
-              
-              <h4>Quantity</h4>
-              <div className='flex-col gap-10'>
-                <div className='flex-wrap gap-15 a-center'>
-                  <QuantityInput
-                    state={quantity}
-                    min={1}
-                    setState={(next) => { setQuantity(next); setQuantityError('') }}
-                    productID={ITEM.name}
-                  />
-                  <span>{stockDisplay}</span>
                 </div>
-                {quantityError && <span className={s.error}>{quantityError}</span>}
+              }
+              {selectedVariant?.additionalInfo &&
+                Object.entries(selectedVariant.additionalInfo).map(([key, val]) =>
+                <div key={key}>
+                  <div>
+                    <h4>{key}</h4>
+                  </div>
+                  <p>{val}</p>
+                </div>
+              )}
+              <div>
+                <h4>Delivery</h4>
+                <div>
+                  <p>via Lalamove (₱250 base delivery fee)</p>
+                </div>
+              </div>
+              <div>
+                <h4>Quantity</h4>
+                <div className='flex-col gap-10'>
+                  <div className='flex-wrap gap-15 a-center'>
+                    <QuantityInput
+                      state={quantity}
+                      min={1}
+                      setState={(next) => { setQuantity(next); setQuantityError('') }}
+                      productID={name}
+                      disabled={!isCurrentlyStocked}
+                    />
+                    {isCurrentlyStocked ? (
+                      <span>{currentStock} in stock</span>
+                    ) : (
+                      <span style={{ color: '#d32f2f', fontWeight: 'bold' }}>Out of stock</span>
+                    )}
+                  </div>
+                  {quantityError && <span className={s.error}>{quantityError}</span>}
+                </div>
               </div>
             </div>
-            <button className={s.addToCart} onClick={() => addToCart()}>
+            {getRuriCoin() > 0 &&
+              <div className={s.ruriCoin}>
+                <span>Purchase this product now and earn</span> <img src={ruriCoin} loading='lazy' alt="ruri coin" /> <strong>{getRuriCoin()}</strong> <span>Ruri Coins!</span>
+              </div>
+            }
+            <button className={s.addToCart} onClick={() => addToCart()} disabled={!isCurrentlyStocked}>
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M21 5L19 12H7.37671M20 16H8L6 3H3M16 5.5H13.5M13.5 5.5H11M13.5 5.5V8M13.5 5.5V3M9 20C9 20.5523 8.55228 21 8 21C7.44772 21 7 20.5523 7 20C7 19.4477 7.44772 19 8 19C8.55228 19 9 19.4477 9 20ZM20 20C20 20.5523 19.5523 21 19 21C18.4477 21 18 20.5523 18 20C18 19.4477 18.4477 19 19 19C19.5523 19 20 19.4477 20 20Z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-              <span>Add To Cart</span>
+              <span>{isCurrentlyStocked ? 'Add To Cart' : 'Out of Stock'}</span>
             </button>
             <div className={s.mop}>
               <figure>
@@ -219,20 +237,10 @@ function Product() {
           </div>
         </div>
       </section>
-      <section className={s.additionalInformation}>
+      <section className={s.additionalInfo}>
         <div className="container flex-col gap-15">
-          <h2>Additional Information</h2>
-          <div>
-            <p>Give your pets a healthy, balanced diet with the Farm-to-Feeding Bowl Box, filled with farm-fresh ingredients perfect for home-prepared meals. Each box may include a variety of fresh and frozen vegetables, providing long-lasting nutrients that can be easily stored and used as needed. As a future plan, we aim to introduce natural treats to further enhance your pet's diet.</p>
-            <br />
-            <b>Available Options:</b>
-            <ul>
-              <li>Daily Bowl: P799 for 10 kilos</li>
-              <li>Shelter Pack: P1999 for 30 kilos</li>
-            </ul>
-            <br />
-            <p>This box ensures your pets receive quality, farm-sourced nutrition, while also helping rescue shelters nourish animals in need.</p>
-          </div>
+          <h2>More Information</h2>
+          <HtmlContentComponent htmlString={parseDesc} />
           <h3>Where's My Order?</h3>
           <p>Most of our produce has a tentative dispatch date. We encourage you to check our latest Viber announcements for updates on your order status. With our new delivery service feature, we strive to send your orders as soon as they become available.</p>
         </div>
@@ -248,5 +256,4 @@ function Product() {
     </div>
   )
 }
-
 export default Product

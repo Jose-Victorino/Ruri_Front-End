@@ -1,15 +1,17 @@
 import React from 'react'
-import { useParams, NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { useGlobal, ACTIONS } from '@/context/GlobalContext';
 
 import Item from './Item'
 
 import s from './Home.module.scss'
 import banner2 from '@/assets/banner-2.png'
 
-const CATEGORIES = ['CSA Boxes', 'Fruits', 'Rescue Buy', 'Exclusives', 'Wholesale']
-
 function Shop() {
   const navigate = useNavigate();
+  const { state, dispatch } = useGlobal()
+  const { PRODUCTS, CATEGORIES } = state
+  
   document.title = "RURI CLUB"
   
   return (
@@ -33,9 +35,13 @@ function Shop() {
         <div className='container flex-col gap-30'>
           <h2>Categories</h2>
           <ul className={s.categoryList} aria-label="Category List">
-            {CATEGORIES.map((category) =>
-              <li key={category} role="button" onClick={() => navigate(`category/${category.toLowerCase().replaceAll(' ', '-')}`)}>
-                {category}
+            {CATEGORIES.map((c) =>
+              <li
+                key={c.categoryId}
+                role="button"
+                onClick={() => navigate(`category/${c.name.toLowerCase().replaceAll(' ', '-')}`)}
+              >
+                {c.name}
               </li>
             )}
           </ul>
@@ -44,12 +50,9 @@ function Shop() {
       <section className={s.shop}>
         <div className='container'>
           <ul>
-            <Item />
-            <Item />
-            <Item />
-            <Item />
-            <Item />
-            <Item />
+            {PRODUCTS.filter((p) => p.isActive).map((p) =>
+              <Item key={p.productId} {...p} />
+            )}
           </ul>
         </div>
       </section>
