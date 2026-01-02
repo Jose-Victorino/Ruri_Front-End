@@ -1,0 +1,88 @@
+@use '@/styles/base' as base;
+
+.payment{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.infoList{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0 15px;
+
+  li{
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: span 3;
+    padding-block: 10px;
+    align-items: center;
+
+    &:not(:last-child){
+      border-bottom: 1px solid base.$gs-w-50;
+    }
+  }
+  .title{
+    white-space: nowrap;
+  }
+
+  img{
+    height: 1em;
+    width: 1em;
+  }
+}
+
+.mopList{
+  display: flex;
+  flex-direction: column;
+
+  li{
+    display: grid;
+    grid-template-rows: max-content 0fr;
+    height: fit-content;
+    transition: grid-template-rows 0.4s;
+    border: 1px solid base.$gs-w-50;
+
+    &:not(:last-child){
+      border-bottom-width: 0;
+    }
+
+    &.show{
+      grid-template-rows: max-content 1fr;
+
+      .content{
+        padding-block: 20px;
+        border-top: 1px solid base.$gs-w-50;
+      }
+    }
+  }
+  .header{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 15px;
+    cursor: pointer;
+  }
+  .content{
+    overflow: hidden;
+    background: base.$gs-w-90;
+    padding-inline: 15px;
+    transition: padding-block 0.4s;
+  }
+
+  img{
+    height: 30px;
+  }
+}
+
+.submitBtn{
+  background: base.$secondary-light;
+  padding: 0.5em 1em;
+  line-height: 1.5;
+  color: white;  
+
+  &:hover{
+    background: base.$secondary-color;
+  }
+}

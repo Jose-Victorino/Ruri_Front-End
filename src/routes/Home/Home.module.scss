@@ -1,0 +1,151 @@
+@use '@/styles/base' as base;
+
+.hero{
+  background: url('/src/assets/banner-1.jpg') no-repeat;
+  background-size: cover;
+  position: relative;
+  height: calc(100vh - 117.6px);
+  height: calc(100dvh - 117.6px);
+  color: white;
+
+  &::after{
+    content: '';
+    background-color: hsla(0, 0%, 0%, 0.6);  
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  & > div{
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+  }
+  .text{
+    width: 640px;
+    height: fit-content;
+  }
+
+  h2{
+    font-size: var(--fs-16-20);
+
+    b{
+      color: base.$secondary-color;
+    }
+  }
+  h1{
+    line-height: 1.2;
+  }
+  .text div{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+
+    button{
+      background: base.$secondary-color;
+      padding: 0.75em 1.25em;
+      line-height: 1.5;
+      border-radius: 2em;
+
+      a{
+        color: white;
+      }
+      
+      &:hover{
+        background: base.$secondary-dark;
+      }
+    }
+  }
+}
+
+.categories{
+  text-align: center;
+  padding-block: 80px;
+
+  h2{
+    line-height: 1;
+  }
+  p{
+    color: base.$gs-w-50;
+  }
+  .categoryList{
+    display: flex;
+    flex-wrap: wrap;
+
+    li{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: hsl(0, 0%, 90%);
+      height: 300px;
+      flex: 1 1 200px;
+      cursor: pointer;
+    }
+  }
+}
+
+.shop{
+  padding-block: 80px;
+
+  ul{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+    gap: 30px 20px;
+  }
+}
+
+.footer{
+  padding-block: 80px;
+
+  img{
+    object-fit: contain;
+    width: 100%;
+    border-radius: 90% 10% 90% 10% / 10% 90% 10% 90%;
+  }
+  & > div{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+    gap: 20px;
+  }
+
+  h2{
+    line-height: 1.2;
+    
+    span{
+      font-size: inherit;
+      color: base.$primary-light;
+    }
+  }
+
+  button{
+    background: base.$secondary-color;
+    padding: 0.75em 1.25em;
+    line-height: 1.5;
+    border-radius: 2em;
+    margin-top: 15px;
+
+    a{
+      color: white;
+    }
+    &:hover{
+      background: base.$secondary-dark;
+    }
+  }
+}
+
+@media(max-width: 780px){
+  .footer{
+    & > div{
+      grid-template-columns: 1fr;
+    }
+  }
+}
+@media(max-width: 560px){
+  .shop{
+    ul{
+      grid-template-columns: 1fr 1fr;
+      gap: 20px 15px;
+    }
+  }
+}

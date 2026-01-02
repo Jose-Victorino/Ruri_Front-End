@@ -1,0 +1,15 @@
+@use '@/styles/base' as base;
+
+.rating{
+  display: flex;
+  gap: 3px;
+
+  div{
+    display: inline-flex;
+  }
+  svg{
+    fill: base.$secondary-color;
+    height: 1em;
+    width: 1em;
+  }
+}

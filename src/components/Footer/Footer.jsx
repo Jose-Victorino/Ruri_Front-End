@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import cn from 'classnames'
 
-import { ScrollReset } from '@/components/Util/Util'
+import { ScrollReset } from '@/library/Util'
 
 import s from './Footer.module.scss'
 

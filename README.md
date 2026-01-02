@@ -74,9 +74,13 @@ npm run lint
 	- `App.jsx` — root app component
 	- `main.jsx` — entry point
 	- `components/` — UI components grouped by feature
+	- `routes/` — app pages
+	- `features/` — app features
+	- `layout/` — component layouts
 	- `context/` — global context and state
 	- `assets/` — images and svgs
-	- `library/` — global SCSS (variables, utils, reset)
+	- `styles/` — global SCSS (variables, utils, reset)
+	- `library/` — utility / helpers
 
 ## Deployment
 The project is a static frontend. After `npm run build`, serve the `dist/` output with any static host (Netlify, Vercel, GitHub Pages, or a simple static file server).

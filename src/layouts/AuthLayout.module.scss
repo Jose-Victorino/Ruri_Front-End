@@ -1,0 +1,72 @@
+@use '@/styles/base' as base;
+
+.authWrapper{
+  display: flex;
+  position: relative;
+  height: 100vh;
+  height: 100dvh;
+}
+
+.left{
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  padding: 15px;
+  background: base.$gs-b-50;
+
+  .logo{
+    height: 100px;
+  }
+}
+
+.right{
+  background: white;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 50%;
+  padding: 40px;
+}
+
+.goBackbtn{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+
+  & > div{
+    display: flex;
+    background: base.$gs-w-80;
+    padding: 8px;
+    border-radius: 6px;
+  }
+  img{
+    height: 1.2em;
+    width: 1.2em;
+  }
+  span{
+    white-space: nowrap;
+  }
+  &:hover > div{
+    background: base.$gs-w-70;
+  }
+}
+
+
+@media(max-width: 780px){
+  .authWrapper{
+    align-items: center;
+  }
+  .left{
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    width: 100%;
+  }
+  .right{
+    width: 100%;
+    margin-inline: 15px;
+    border: 1px solid base.$gs-w-80;
+    border-radius: 6px;
+  }
+}

@@ -1,8 +1,7 @@
-import { useEffect } from 'react'
-import { Outlet, useLocation } from 'react-router'
-import Navigation from '@/components/Navigation/Navigation'
+import React from 'react'
+import { Outlet } from 'react-router'
 
-import './App.module.scss'
+import Navigation from '@/components/Navigation/Navigation'
 import Footer from '@/components/Footer/Footer'
 
 function App() {
