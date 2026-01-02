@@ -71,15 +71,15 @@
   }
   .categoryList{
     display: flex;
-    height: 340px;
+    flex-wrap: wrap;
 
     li{
       display: flex;
       align-items: center;
       justify-content: center;
       background-color: hsl(0, 0%, 90%);
-      height: 100%;
-      flex-grow: 1;
+      height: 300px;
+      flex: 1 1 200px;
       cursor: pointer;
     }
   }

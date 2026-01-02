@@ -1,8 +1,46 @@
 export const initialState = {
-	cart: [],
-
-
-
+	auth: {
+		user: {},
+	},
+	USERS: [
+		{
+			userId: 1,
+			firstName: 'Mark',
+			lastName: 'Artista',
+			email: 'user@gmail.com',
+			password: 'User1234',
+			phoneNumber: '09994536241',
+			membership: 'seed',
+			birthday: '2002-1-1',
+			address: [
+				{
+					street: '',
+					barangay: '',
+					city: '',
+					postcode: '',
+					country: '',
+					region: '',
+				}
+			],
+		},
+	],
+	MEMBERSHIPS: [
+		{
+			membershipId: 1,
+			name: 'seed',
+			desc: "This tier has no membership fee and no discounts, but members still play a vital role in supporting Ruri's mission to assist farmers. By joining as a Seed member, you show your commitment to the cause and help us continue our efforts to directly connect growers and consumers.",
+		},
+		{
+			membershipId: 2,
+			name: 'tree',
+			desc: "Tree members receive a membership kit with a Ruri Club shopping bag. Enjoy up to 20% exclusive website discounts and ₱2,000 in welcome vouchers to kickstart your savings.",
+		},
+		{
+			membershipId: 3,
+			name: 'forest',
+			desc: "Join the Forest-tier Corporate Membership and receive the freshest, naturally grown produce while supporting sustainability and community impact. Each membership helps local farmers, enhances employee wellness, and strengthens your company's social responsibility.",
+		},
+	],
 	PRODUCTS: [
 		{
 			productId: 1,
@@ -1041,7 +1079,7 @@ export const initialState = {
       		variantId: 'ffb-weekly',
 					label: 'Weekly',
 					price: 5596,
-					stock: 3,
+					stock: 0,
         	unlimitedStock: false,
 					ruriCoin: 11,
 					imgPath: '',
@@ -1056,27 +1094,55 @@ export const initialState = {
 		{
 			categoryId: 1,
 			name: 'CSA Boxes',
+			categorySlug: 'csa-boxes',
 			imgPath: '',
 		},
 		{
 			categoryId: 2,
 			name: 'Fruits',
+			categorySlug: 'fruits',
 			imgPath: '',
 		},
 		{
 			categoryId: 3,
 			name: 'Rescue Buy',
+			categorySlug: 'rescue-buy',
 			imgPath: '',
 		},
 		{
 			categoryId: 4,
 			name: 'Ruri Exclusives',
+			categorySlug: 'ruri-exclusives',
 			imgPath: '',
 		},
 		{
 			categoryId: 5,
 			name: 'Wholesale Products',
+			categorySlug: 'wholesale-products',
 			imgPath: '',
+		},
+	],
+	COUPON: [
+		{
+			couponId: 1,
+			code: 'test',
+			type: 'percent',
+			discount: 10,
+			isActive: true,
+		},
+		{
+			couponId: 2,
+			code: '123',
+			type: 'percent',
+			discount: 15,
+			isActive: true,
+		},
+		{
+			couponId: 3,
+			code: 'flat',
+			type: 'flat',
+			discount: 200,
+			isActive: true,
 		},
 	],
 }

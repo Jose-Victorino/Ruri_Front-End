@@ -1,11 +1,18 @@
 ## TODO:
 - [x] `CART` UI
 - [x] `ITEM` - add to cart functionality
-- [ ] `PRODUCT` - review UI & functionality
-- [ ] `STORE LOCATOR` UI & functionality
-- [ ] `CHECKOUT` UI & functionality
-- [ ] `TRACK ORDER` - functionality **(Need simulation of tracking)**
-- [x] `LOGIN` - forgot password UI
+- [x] `STORE LOCATOR` UI
+- [x] `PRODUCT` - review UI
+- [x] `CHECKOUT` UI
+- [x] `ALL POLICY` - UI
+- [x] `PRODUCT, ITEM, CART, CHECKOUT` - Handle out of stock
+- [ ] `ORDER CONFIRMATION` - UI
+- [ ] `NAVIGATION, CART, CHECKOUT` - User functionality
+- [ ] `NAVIGATION` - Search bar functionality
+- [ ] `SEARCH RESULT` - UI
+- [ ] `LOGIN` - forgot password
+- [ ] `PROFILE` - UI & functionality
+- [ ] App wide notification system **On-going**
 
 # Ruri
 
@@ -21,11 +28,13 @@
 - Responsive layout with SCSS modules
 
 ## Tech Stack
-- Vite
+- Vite 7
 - React 19
-- React Router
+- React Router 7
 - SCSS (module-based)
-- Formik + Yup for forms
+- Formik + Yup for form validation
+- React Toastify for notifications
+- ESLint for code quality
 
 ## Prerequisites
 - Node.js 18+ (recommended)
@@ -39,7 +48,7 @@ npm install
 
 Start the dev server:
 ```bash
-npm start
+npm run dev
 ```
 
 Build for production:
@@ -76,8 +85,8 @@ The project is a static frontend. After `npm run build`, serve the `dist/` outpu
 Open an issue or submit a PR. Keep changes focused and update styles or components with corresponding module files.
 
 ## License
-Add a license file or specify the license here.
+MIT (add LICENSE file to repository)
 
 ---
 
-If you want I can: run the dev server, add a CONTRIBUTING guide, or add CI/deploy config.
+Questions? Check the source code or open an issue.

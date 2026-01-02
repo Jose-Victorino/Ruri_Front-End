@@ -1,13 +1,21 @@
 import { useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
-import { useGlobal, ACTIONS } from '@/context/GlobalContext';
+import { toast } from 'react-toastify';
+import { useGlobal, ACTIONS } from '@/context/GlobalContext'
 import cn from 'classnames'
 
+import NotFound from '@/components/NotFound/NotFound'
+
 import QuantityInput from '@/components/Util/QuantityInput/QuantityInput'
+import Rating from '@/components/Util/Rating/Rating'
+import { ScrollResetEffect } from '@/components/Util/Util'
 
 import s from './Product.module.scss'
 
 import productImage from '@/assets/461087521_843841854602360_6475783316939153006_n.png'
+
+import arrowLeft from 'svg/arrow-left.svg'
+import arrowRight from 'svg/arrow-right.svg'
 import checkIcon from 'svg/check.svg'
 import mopAtome from '@/assets/mop/atome.svg'
 import mopVisa from '@/assets/mop/visa-mastercard.png'
@@ -18,9 +26,79 @@ import mopBpi from '@/assets/mop/bpi.png'
 import mopBillease from '@/assets/mop/billease.svg'
 import ruriCoin from '@/assets/svg/ruri-coin.svg'
 
+const REVIEW = [
+  {
+    id: 1,
+    name: 'Lorem ipsum',
+    date: '12-04-2025',
+    rating: 2,
+    review: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque obcaecati atque fugit id sapiente a tempora magni sequi ad repellendus.',
+  },
+  {
+    id: 2,
+    name: 'Lorem ipsum',
+    date: '12-04-2025',
+    rating: 3,
+    review: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque obcaecati atque fugit id sapiente a tempora magni sequi ad repellendus.',
+  },
+  {
+    id: 3,
+    name: 'Lorem ipsum',
+    date: '12-04-2025',
+    rating: 4,
+    review: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque obcaecati atque fugit id sapiente a tempora magni sequi ad repellendus.',
+  },
+  {
+    id: 4,
+    name: 'Lorem ipsum',
+    date: '12-04-2025',
+    rating: 4,
+    review: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque obcaecati atque fugit id sapiente a tempora magni sequi ad repellendus.',
+  },
+  {
+    id: 5,
+    name: 'Lorem ipsum',
+    date: '12-04-2025',
+    rating: 2,
+    review: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque obcaecati atque fugit id sapiente a tempora magni sequi ad repellendus.',
+  },
+  {
+    id: 6,
+    name: 'Lorem ipsum',
+    date: '12-04-2025',
+    rating: 5,
+    review: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque obcaecati atque fugit id sapiente a tempora magni sequi ad repellendus.',
+  },
+  {
+    id: 7,
+    name: 'Lorem ipsum',
+    date: '12-04-2025',
+    rating: 5,
+    review: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque obcaecati atque fugit id sapiente a tempora magni sequi ad repellendus.',
+  },
+  {
+    id: 8,
+    name: 'Lorem ipsum',
+    date: '12-04-2025',
+    rating: 1,
+    review: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque obcaecati atque fugit id sapiente a tempora magni sequi ad repellendus.',
+  },
+]
+
 const HtmlContentComponent = ({ htmlString }) => {
-  return (htmlString !== '' && <div dangerouslySetInnerHTML={{ __html: htmlString }} />);
-};
+  return (htmlString !== '' && <div dangerouslySetInnerHTML={{ __html: htmlString }} />)
+}
+
+const UserRating = ({name, date, rating, review}) => (
+  <li className={s.userRating}>
+    <div className='flex-col gap-5'>
+      <p>{name}</p>
+      <Rating rate={rating}/>
+      <span>{date}</span>
+    </div>
+    <p>{review}</p>
+  </li>
+)
 
 function Product() {  
   const { state, dispatch } = useGlobal()
@@ -30,19 +108,26 @@ function Product() {
   const [quantity, setQuantity] = useState(1)
   const [variantError, setVariantError] = useState('')
   const [quantityError, setQuantityError] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
 
+  const prodSlugs = state.PRODUCTS.reduce((prev, acc) => [...prev, acc.slug], [])
+  
+  if(!prodSlugs.includes(productName)) return <NotFound msg='Product Not Found'/>
+  
   const product = state.PRODUCTS.find((p) => p.slug === productName)
-  const { productId, name, category, description, variants } = product;
+  const { productId, name, category, description, variants } = product
 
   document.title = `${name} | RURI CLUB`
 
   const isOneVariant = variants.length === 1
   const parseDesc = description && description.split('\n ').map((d) => `<p>${d}</p>`).join('<br />')
+
+  ScrollResetEffect()
   
   if(isOneVariant && selectedVariant === null) {
     setSelectedVariant(variants[0])
   }
-  
+
   const getPrice = () => {
     if(isOneVariant)
       return `₱${variants[0].price.toLocaleString()}`
@@ -64,6 +149,7 @@ function Product() {
     }
     return Math.max(...variants.map(v => v.ruriCoin))
   }
+  const ruriCoinVal = getRuriCoin();
 
   const getStock = () => {
     if (selectedVariant) {
@@ -79,6 +165,28 @@ function Product() {
   const handleVariantState = (variant) => {
     setSelectedVariant(variant)
     setVariantError('')
+  }
+
+  const reviewsPerPage = 5
+  const totalPages = Math.ceil(REVIEW.length / reviewsPerPage)
+  const startIndex = (currentPage - 1) * reviewsPerPage
+  const endIndex = startIndex + reviewsPerPage
+  const paginatedReviews = REVIEW.slice(startIndex, endIndex)
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1)
+    }
+  }
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1)
+    }
+  }
+
+  const handlePageClick = (pageNum) => {
+    setCurrentPage(pageNum)
   }
   
   const addToCart = () => {
@@ -119,6 +227,7 @@ function Product() {
     }
 
     dispatch({ type: ACTIONS.ADD_TO_CART, payload: updatedCart })
+    toast.success("Item has been added to cart")
   }
 
   return (
@@ -135,7 +244,7 @@ function Product() {
       <section className={s.product}>
         <div className="container">
           <div className={s.left}>
-            <img src={productImage} loading="lazy" alt="product" />
+            <img src='https://placehold.co/540' loading="lazy" alt={name} />
           </div>
           <div className={s.right}>
             <h1>{name}</h1>
@@ -149,13 +258,15 @@ function Product() {
                   <div className='flex-col gap-5'>
                     <ul className={s.variantList}>
                       {variants.map((v) => {
-                        const isSelected = selectedVariant?.variantId === v.variantId;
+                        const isSelected = selectedVariant?.variantId === v.variantId
+                        const isOutOfStock = v.stock < 1
+                        
                         return (
-                          <li key={v.variantId} className={cn({[s.selected]: isSelected})} aria-selected={isSelected}>
+                          <li key={v.variantId} className={cn({[s.notStocked]: isOutOfStock, [s.selected]: isSelected})} aria-selected={isSelected}>
                             <div className={s.checkMark} aria-hidden>
                               <img src={checkIcon} loading="lazy" alt="check" />
                             </div>
-                            <button onClick={() => handleVariantState(v)}>{v.label}</button>
+                            <button onClick={() => handleVariantState(v)} disabled={isOutOfStock} title={isOutOfStock ? 'Out of Stock' : ''}>{v.label}</button>
                           </li>
                         )
                       })}
@@ -166,13 +277,14 @@ function Product() {
               }
               {selectedVariant?.additionalInfo &&
                 Object.entries(selectedVariant.additionalInfo).map(([key, val]) =>
-                <div key={key}>
-                  <div>
-                    <h4>{key}</h4>
+                  <div key={key}>
+                    <div>
+                      <h4>{key}</h4>
+                    </div>
+                    <p>{val}</p>
                   </div>
-                  <p>{val}</p>
-                </div>
-              )}
+                )
+              }
               <div>
                 <h4>Delivery</h4>
                 <div>
@@ -200,9 +312,9 @@ function Product() {
                 </div>
               </div>
             </div>
-            {getRuriCoin() > 0 &&
+            {ruriCoinVal > 0 &&
               <div className={s.ruriCoin}>
-                <span>Purchase this product now and earn</span> <img src={ruriCoin} loading='lazy' alt="ruri coin" /> <strong>{getRuriCoin()}</strong> <span>Ruri Coins!</span>
+                <span>Purchase this product now and earn</span> <img src={ruriCoin} loading='lazy' alt="ruri coin" /> <strong>{ruriCoinVal}</strong> <span>Ruri Coins!</span>
               </div>
             }
             <button className={s.addToCart} onClick={() => addToCart()} disabled={!isCurrentlyStocked}>
@@ -246,10 +358,38 @@ function Product() {
         </div>
       </section>
       <section className={s.reviews}>
-        <div className="container flex-col gap-15">
-          <h2>Reviews (0)</h2>
+        <div className="container">
+          <h2>Reviews ({REVIEW.length || 0})</h2>
           <div>
-            <p>There are not reviews yet.</p>
+            {REVIEW.length > 0 ? (
+              <>
+                <ul className={s.reviewList}>
+                  {paginatedReviews.map((r) => <UserRating key={r.id} {...r}/>)}
+                </ul>
+                <div className={s.paginationCont}>
+                  <button className={s.prevBtn} onClick={handlePrevPage} disabled={currentPage === 1}>
+                    <img src={arrowLeft} loading='lazy' alt="previous" />
+                  </button>
+                  <ul className={s.reviewPagination}>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                      <li key={pageNum}>
+                        <button 
+                          className={currentPage === pageNum ? s.currentPage : ''}
+                          onClick={() => handlePageClick(pageNum)}
+                        >
+                          {pageNum}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                  <button className={s.nextBtn} onClick={handleNextPage} disabled={currentPage === totalPages}>
+                    <img src={arrowRight} loading='lazy' alt="next" />
+                  </button>
+                </div>
+              </>
+            ) : (
+              <p className='pad-block-20'>There are not reviews yet.</p>
+            )}
           </div>
         </div>
       </section>

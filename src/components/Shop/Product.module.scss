@@ -1,7 +1,7 @@
 @use '@/library/base' as base;
 
 body:has(.product){
-  background: base.$gs-w-80;
+  background: base.$gs-w-90;
 }
 
 .breadcrumbs{
@@ -25,6 +25,7 @@ body:has(.product){
   }
 
   .left{
+    display: flex;
 
     img{
       width: 100%;
@@ -121,9 +122,16 @@ body:has(.product){
         border: 1px solid base.$gs-w-70;
         border-radius: 3px;
         
-        &:hover{
+        &:hover:not(:disabled){
           color: base.$secondary-color;
           border-color: base.$secondary-color;
+        }
+        &:disabled{
+          opacity: 0.8;
+          
+          &:hover{
+            cursor: not-allowed;
+          }
         }
       }
     }
@@ -135,6 +143,7 @@ body:has(.product){
       display: flex;
       gap: 5px;
       align-items: center;
+      
       img{
         height: 1.5em;
         width: 1.5em;
@@ -185,6 +194,66 @@ body:has(.product){
   }
   h3{
     font-size: base.$sz-16-20;
+  }
+}
+
+.reviewList{
+  display: flex;
+  flex-direction: column;
+
+  .userRating{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-block: 20px;
+    border-bottom: 1px solid base.$gs-w-60;
+  
+    span{
+      color: base.$gs-b-40;
+      font-size: 0.8em;
+    }
+  }
+}
+
+.paginationCont{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding-top: 20px;
+
+  img{
+    height: 1.25em;
+    width: 1.25em;
+  }
+
+  .nextBtn, .prevBtn{
+    display: flex;
+
+    &:disabled{
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .reviewPagination{
+    display: flex;
+    gap: 15px;
+
+    button{
+      height: 2em;
+      width: 2em;
+      border-radius: 50%;
+
+      &.currentPage{
+        background: base.$primary-color;
+        color: white;
+      }
+      &:hover{
+        background: base.$primary-light;
+        color: white;
+      }
+    }
   }
 }
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { useGlobal, ACTIONS } from '@/context/GlobalContext';
+import { useGlobal, ACTIONS } from '@/context/GlobalContext'
 
 import Item from './Item'
 
@@ -8,7 +8,7 @@ import s from './Home.module.scss'
 import banner2 from '@/assets/banner-2.png'
 
 function Shop() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const { state, dispatch } = useGlobal()
   const { PRODUCTS, CATEGORIES } = state
   

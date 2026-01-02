@@ -208,7 +208,7 @@ function FAQs() {
                     </div>
                   </div>
                   {isMounted && (
-                    <div className={s.content}>
+                    <div className={s.content} aria-hidden={!isOpen}>
                       {item.a}
                     </div>
                   )}

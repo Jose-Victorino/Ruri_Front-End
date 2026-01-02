@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import cn from 'classnames'
 
+import { ScrollReset } from '@/components/Util/Util'
+
 import s from './Footer.module.scss'
 
 import facebookIcon from 'svg/facebook.svg'
@@ -25,22 +27,31 @@ function Footer() {
         <div className='container'>
           <div className={s.main}>
             <div>
-              <h2>ALL POLICY</h2>
+              <h2>QUICK LINKS</h2>
               <ul style={{textAlign: 'center'}}>
                 <li>
-                  <Link>Spoilage Policy</Link>
+                  <Link to='/' onClick={() => ScrollReset()}>Shop</Link>
                 </li>
                 <li>
-                  <Link>Allergy Disclaimer</Link>
+                  <Link to='/membership' onClick={() => ScrollReset()}>Membership</Link>
                 </li>
                 <li>
-                  <Link>Privacy Policy</Link>
+                  <Link to='https://ruralrisingph.com' onClick={() => ScrollReset()}>About</Link>
                 </li>
                 <li>
-                  <Link>Weight Notice</Link>
+                  <Link to='/events' onClick={() => ScrollReset()}>Events</Link>
                 </li>
                 <li>
-                  <Link>Return and Refund Policy</Link>
+                  <Link to='/track-order' onClick={() => ScrollReset()}>Track Order</Link>
+                </li>
+                <li>
+                  <Link to='/store-locations' onClick={() => ScrollReset()}>Store Locations</Link>
+                </li>
+                <li>
+                  <Link to='/faqs' onClick={() => ScrollReset()}>FAQs</Link>
+                </li>
+                <li>
+                  <Link to='/policies' onClick={() => ScrollReset()}>Policies</Link>
                 </li>
               </ul>
             </div>

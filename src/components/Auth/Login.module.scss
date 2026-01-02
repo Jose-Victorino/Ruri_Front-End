@@ -1,29 +1,5 @@
 @use '@/library/base' as base;
 
-.goBackbtn{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-
-  & > div{
-    display: flex;
-    background: base.$gs-w-80;
-    padding: 8px;
-    border-radius: 6px;
-  }
-  img{
-    height: 1.2em;
-    width: 1.2em;
-  }
-  span{
-    white-space: nowrap;
-  }
-  &:hover > div{
-    background: base.$gs-w-70;
-  }
-}
-
 .form{
   display: flex;
   flex-direction: column;
@@ -42,10 +18,7 @@
   gap: 15px;
 
   .txtField{
-    background: base.$gs-w-100;
-    padding: 0.75em;
-    border: 1px solid base.$gs-w-80;
-    border-radius: 6px;
+    @include base.input();
     width: 100%;
   }
 
@@ -62,6 +35,11 @@
   }
 }
 
+.errorMsg{
+  color: hsl(0, 65%, 51%);
+  font-size: 0.85rem;
+}
+
 .bottom{
   display: flex;
   justify-content: space-between;
@@ -74,7 +52,7 @@
     cursor: pointer;
   }
   a{
-    color: hsl(211, 100%, 50%);
+    color: base.$link-color;
 
     &:hover{
       text-decoration: underline;
@@ -98,6 +76,6 @@
   padding: 15px;
 
   a{
-    color: hsl(211, 100%, 50%);;
+    color: base.$link-color;
   }
 }

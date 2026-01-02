@@ -5,12 +5,8 @@
 *, *::before, *::after {
   text-decoration: none;
 	box-sizing: border-box;
-  scroll-behavior: smooth;
 	margin: 0;
 	padding: 0;
-}
-html, body{
-  overflow: hidden auto;
 }
 body{
   font-family: base.$font1;
@@ -24,8 +20,8 @@ body{
 h1{ font-size: clamp(3.5rem, 1.5rem + 5.7143vw, 4rem); }
 h2{ font-size: clamp(2.5rem, 0.5rem + 5.7143vw, 3rem); }
 h3{ font-size: clamp(1.75rem, 0.75rem + 2.8571vw, 2rem); }
-h4, p, a, b, span, li, th, td, button{ font-size: clamp(0.75rem, -0.25rem + 2.8571vw, 1rem); }
-h1, h2, h3, h4, h5, h6, p, span, a{ line-height: 1.5; }
+h4, p, a, b, strong, span, li, th, td, button{ font-size: clamp(0.75rem, -0.25rem + 2.8571vw, 1rem); }
+h1, h2, h3, h4, h5, h6, p, span, a, b, strong{ line-height: 1.5; }
 a{
   font-family: inherit;
   text-decoration: none;

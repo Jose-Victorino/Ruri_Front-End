@@ -6,12 +6,12 @@ import minusIcon from 'svg/minus.svg'
 import plusIcon from 'svg/plus.svg'
 
 function QuantityInput({state, setState, min, productID, disabled = false}) {
-  const inputRef = useRef(null);
+  const inputRef = useRef(null)
   
   const handleQuantityChange = (dir) => {
-    const next = Math.max(min || 0, state + dir);
-    setState(next);
-    inputRef.current.value = next;
+    const next = Math.max(min || 0, state + dir)
+    setState(next)
+    inputRef.current.value = next
   }
 
   return (

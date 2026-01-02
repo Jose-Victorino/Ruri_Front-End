@@ -1,22 +1,12 @@
-import React from 'react'
-import { NavLink, useNavigate, useSearchParams } from 'react-router-dom';
+import { useState } from 'react'
 import { Formik, Field, Form } from 'formik'
 
 import s from './ForgotPassword.module.scss'
 
-import arrowLeft from 'svg/arrow-left.svg'
-
 function ForgotPassword() {
-  const navigate = useNavigate()
 
   return (
     <>
-      <button type="button" className={s.goBackbtn} onClick={() => navigate(-1)}>
-        <div>
-          <img src={arrowLeft} loading="lazy" alt="arrow" />
-        </div>
-        <span>Go Back</span>
-      </button>
       <Formik initialValues={{ email: '' }}>
         <Form className={s.form}>
           <h1 className='mb-15'>Recover Password</h1>

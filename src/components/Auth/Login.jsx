@@ -1,31 +1,53 @@
 import { useState } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom'
 import { Formik, Field, Form } from 'formik'
+import * as Yup from 'yup'
+import { toast } from 'react-toastify';
+import { useGlobal, ACTIONS } from '@/context/GlobalContext'
 
 import s from './Login.module.scss'
 
-import arrowLeft from 'svg/arrow-left.svg'
 import eyeIcon from 'svg/eye.svg'
 import eyeSlashIcon from 'svg/eye-slash.svg'
 
+const validationSchema = Yup.object().shape({
+  email: Yup.string()
+    .email('Invalid email address').required('Email is required'),
+  password: Yup.string()
+    .min(8, 'Password must be 8 characters minimum')
+    .matches(/[a-z]/, 'Password requires a lowercase letter')
+    .matches(/[A-Z]/, 'Password requires an uppercase letter')
+    // .matches(/[0-9]/, 'Password requires a number')
+    // .matches(/[^a-zA-Z0-9]/, 'Password requires a symbol')
+})
+
 function Login() {
   const navigate = useNavigate()
+  const { state, dispatch } = useGlobal()
   const [showPassword, setShowPassword] = useState(false)
 
+  const onSubmit = (values) => {
+    const { email, password, rememberMe } = values
+    
+    const user = state.USERS.find(u => u.email === email && u.password === password)
+    
+    if(user) {
+      dispatch({ type: ACTIONS.SET_AUTH_USER, payload: user })
+      navigate('/')
+    } else {
+      toast.error('Invalid email or password')
+    }
+  }
   return (
     <>
-      <button type="button" className={s.goBackbtn} onClick={() => navigate(-1)}>
-        <div>
-          <img src={arrowLeft} loading="lazy" alt="arrow" />
-        </div>
-        <span>Go Back</span>
-      </button>
       <Formik
         initialValues={{
           email: '',
           password: '',
           rememberMe: false,
         }}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
       >
         {({ values, setFieldValue, errors, touched }) => {
           return (
@@ -41,6 +63,7 @@ function Login() {
                     <img src={showPassword ? eyeIcon : eyeSlashIcon} loading="lazy" alt="eye" />
                   </button>
                 </div>
+                {errors.password && <span className={s.errorMsg}>{errors.password}</span>}
               </div>
               <div className={s.bottom}>
                 <label htmlFor='rememberMe' role='button' className={s.rememberMe}>

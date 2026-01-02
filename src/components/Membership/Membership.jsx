@@ -1,25 +1,12 @@
 import React from 'react'
+import { useGlobal, ACTIONS } from '@/context/GlobalContext'
 
 import s from './Membership.module.scss'
 import Tier from './Tier'
 
-const tiers = [
-  {
-    name: "seed",
-    desc: "This tier has no membership fee and no discounts, but members still play a vital role in supporting Ruri's mission to assist farmers. By joining as a Seed member, you show your commitment to the cause and help us continue our efforts to directly connect growers and consumers.",
-  },
-  {
-    name: "tree",
-    desc: "Tree members receive a membership kit with a Ruri Club shopping bag. Enjoy up to 20% exclusive website discounts and ₱2,000 in welcome vouchers to kickstart your savings.",
-  },
-  {
-    name: "forest",
-    desc: "Join the Forest-tier Corporate Membership and receive the freshest, naturally grown produce while supporting sustainability and community impact. Each membership helps local farmers, enhances employee wellness, and strengthens your company's social responsibility.",
-  },
-]
-
-
 function Membership() {
+  const { state, dispatch } = useGlobal()
+  const { MEMBERSHIPS } = state
   document.title = "RURI CLUB | Membership"
 
   return (
@@ -56,7 +43,7 @@ function Membership() {
         <div className='container flex-col a-center'>
           <h2>Membership Tiers</h2>
           <p className={s.description}>Your support is more than a contribution, it's a major step towards our vision of empowering 100,000 sustainable and debt-free farmers by 2030. Our Rural Rising community hand-in-hand with farmer communities, it is possible to create a resilient and self-sufficient agricultural system that thrives independently, ensuring a prosperous and healthy future for all.</p>
-          <ul>{tiers.map((t) => <Tier key={t.name} {...t}/>)}</ul>
+          <ul>{MEMBERSHIPS.map((m) => <Tier key={m.membershipId} {...m}/>)}</ul>
         </div>
       </section>
       <section className={s.benefits}>

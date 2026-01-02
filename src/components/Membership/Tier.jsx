@@ -15,7 +15,7 @@ const TIER_ICONS = {
 }
 
 function Tier({name, desc}) {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   return (
     <li className={cn(s.tier, s[`tier-${name}`])}>

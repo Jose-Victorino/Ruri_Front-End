@@ -53,9 +53,9 @@
   }
 
   .authNav{
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 10px;
     color: white;
     
     img{
@@ -64,11 +64,41 @@
     }
     a{
       display: flex;
-      color: white;
+      color: inherit;
       padding-block: 13px;
 
       &:hover{
         text-decoration: underline;
+      }
+    }
+    .options{
+      position: absolute;
+      top: 0;
+    }
+
+    .user{
+      display: flex;
+      gap: 10px;
+      padding-block: 13px;
+      
+      span{
+        color: white;
+      }
+    }
+    [popover]{
+      inset: unset;
+      top: anchor(bottom);
+      left: anchor(left);
+      border: none;
+
+      button{
+        padding: 1em 1.25em;
+        width: 100%;
+
+        &:hover{
+          background: base.$secondary-light;
+          color: white;
+        }
       }
     }
   }
@@ -125,7 +155,7 @@
     transition: color 0.3s ease-in-out;
 
     &:hover, &.active{
-      color: base.$link-color;
+      color: base.$secondary-color;
     }
   }
 }
@@ -211,7 +241,7 @@
         width: 100%;
 
         &.active{
-          color: base.$link-color;
+          color: base.$secondary-color;
         }
       }
     }

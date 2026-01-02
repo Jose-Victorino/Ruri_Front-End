@@ -1,0 +1,5 @@
+@use '@/library/base' as base;
+
+.policy h4{
+  font-size: base.$sz-16-20;
+}

@@ -54,22 +54,43 @@
 .a-baseline{ align-items: baseline; }
 
 @for $i from 1 through 10{
-  .gap-#{$i * 5}{
-    gap: #{$i * 5}px;
+  $val_i: $i * 10;
+
+  .w-#{$val_i}{
+    width: $val_i * 1%;
   }
-  
-  .mb-#{$i * 5}{
-    margin-bottom: #{$i * 5}px;
+}
+
+@for $i from 1 through 20{
+  $val_i: $i * 5;
+   
+  .gap-#{$val_i}{
+    gap: #{$val_i}px;
   }
 
-  .pad-#{$i * 5}{
-    padding: #{$i * 5}px;
+  @for $j from 1 through 20{
+    $val_j: $j * 5;
+    .gap-#{$val_i}-#{$val_j}{
+      gap: #{$val_i}px #{$val_j}px;
+    }
   }
-  .pad-block-#{$i * 5}{
-    padding-block: #{$i * 5}px;
+  
+  .mb-#{$val_i}{
+    margin-bottom: #{$val_i}px;
   }
-  .pad-inline-#{$i * 5}{
-    padding-inline: #{$i * 5}px;
+
+  .pad-#{$val_i}{
+    padding: #{$val_i}px;
+  }
+  .pad-block-#{$val_i}{
+    padding-block: #{$val_i}px;
+  }
+  .pad-inline-#{$val_i}{
+    padding-inline: #{$val_i}px;
+  }
+
+  .w-#{$val_i}{
+    width: $val_i * 1%;
   }
 }
 
@@ -101,6 +122,6 @@
 
 @media(max-width: 560px){
   :root{
-    --container-width: calc(100% - 40px);
+    --container-width: calc(100% - 30px);
   }
 }
