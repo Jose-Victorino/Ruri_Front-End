@@ -41,6 +41,9 @@
     padding: 8px;
     border-radius: 50%;
 
+    &:disabled{
+      opacity: 0.8;
+    }
     img{
       height: var(--fs-16-20);
       width: var(--fs-16-20);

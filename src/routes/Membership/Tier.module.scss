@@ -26,18 +26,6 @@ $tiers: (
   justify-items: center;
   padding: 0 30px 25px;
   border-radius: 12px;
-
-  button{
-    background: base.$secondary-color;
-    padding: 0.75em 1.25em;
-    color: white;
-    border-radius: 6px;
-    width: fit-content;
-
-    &:hover{
-      background: base.$secondary-dark;
-    }
-  }
 }
 
 .top{

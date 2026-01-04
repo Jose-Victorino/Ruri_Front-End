@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { useGlobal, ACTIONS } from '@/context/GlobalContext'
 import cn from 'classnames'
 
-import { ScrollResetEffect, wordCap } from '@/library/Util'
+import { ScrollResetEffect } from '@/library/Util'
+import Button from '@/components/Button/Button'
+import Input from '@/components/Input/Input.formik'
 
 import s from './Information.module.scss'
 
@@ -28,43 +30,31 @@ const validationSchema = Yup.object().shape({
   termsAndConditions: Yup.boolean().oneOf([true], 'You must agree to the terms and conditions')
 })
 
-const Input = ({ children, input, displayName, error, touched }) => {
-  const { type, id, required } = input
-
-  return (
-    <div className={cn('flex-col', s.inputCont)}>
-      <label htmlFor={id} className='mb-5'>{wordCap(displayName || id.replace('_', ' '))} {required && <span className={s.inputRequired}>*</span>}</label>
-      {type === 'select'
-        ? <Field as={type} {...input}>{children}</Field>
-        : <Field {...input}/>
-      }
-      {error && touched && <span className={s.errorMsg}>{error}</span>}
-    </div>
-  )
-}
-
 function Information() {
   const { state, dispatch } = useGlobal()
   const navigate = useNavigate()
+
+  const user = state.auth.user
+  const defaultAddress = user?.address?.find(addr => addr.isDefault) || null
 
   const defaultState = {
     shipping: '',
     drop_location: '',
     note: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    barangay: '',
-    street: '',
-    city: '',
-    postcode: '',
-    country: 'Philippines',
-    region: 'Metro Manila',
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
+    email: user?.email || '',
+    phoneNumber: user?.phoneNumber || '',
+    barangay: defaultAddress?.barangay || '',
+    street: defaultAddress?.street || '',
+    city: defaultAddress?.city || '',
+    postcode: defaultAddress?.postcode || '',
+    country: defaultAddress?.country || 'Philippines',
+    region: defaultAddress?.region || 'Metro Manila',
     termsAndConditions: false,
     mop: '',
   }
-  const informationState = { ...defaultState, ...state.checkoutInformation }
+  const informationState = user?.userId ? { ...defaultState, ...state.checkoutInformation } : { ...state.checkoutInformation, ...defaultState }
   
   ScrollResetEffect()
 
@@ -179,7 +169,13 @@ function Information() {
               {errors.termsAndConditions && <span className={s.errorMsg}>{errors.termsAndConditions}</span>}
               {errors.shipping && touched.shipping && <span className={s.errorMsg}>{errors.shipping}</span>}
               {errors.drop_location && touched.drop_location && <span className={s.errorMsg}>{errors.drop_location}</span>}
-              <button type='submit' className={s.submitBtn} disabled={!isValid}>Proceed to Next Step</button>
+              <Button
+                text='Proceed to Next Step'
+                type='submit'
+                color='yellow'
+                corners='sharp'
+                disabled={!isValid}
+              />
             </div>
           </section>
         </Form>

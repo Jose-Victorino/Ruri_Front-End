@@ -1,7 +1,8 @@
-import { useState, useRef, useMemo } from 'react'
+import { useRef, useMemo } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import { useGlobal, ACTIONS } from '@/context/GlobalContext'
+import { useCart } from '@/hooks/useCart'
 import cn from 'classnames'
 
 import QuantityInput from '@/components/QuantityInput/QuantityInput'
@@ -15,45 +16,13 @@ import ruriCoin from '@/assets/svg/ruri-coin.svg'
 function Cart() {
   const navigate = useNavigate()
   const { state, dispatch } = useGlobal()
+  const { cart, removeFromCart, updateQuantity, getProductVariantDetails, cartTotals, getDiscountedSubtotal } = useCart()
   const couponState = state?.checkoutInformation?.coupon
-  const cartState = state.cart || []
   const couponRef = useRef(null)
 
   document.title = 'RURI CLUB | Cart'
-
-  let totalRuriCoin = 0
   
   ScrollResetEffect()
-
-  const getProductVariantDetails = (productId, variantId) => {
-    const product = state.PRODUCTS.find(p => p.productId === productId)
-    if (!product) return null
-    const variant = product.variants.find(v => v.variantId === variantId)
-    return { product, variant }
-  }
-
-  const containsOutOfStock = useMemo(() => {
-    return cartState.reduce((acc, id) => {
-      if(acc) return acc
-      const details = getProductVariantDetails(id.productId, id.variantId)
-      
-      return details?.variant?.stock < 1
-    }, false)
-  }, [cartState])
-
-  const updateQty = (productId, variantId, next) => {
-    dispatch({
-      type: ACTIONS.UPDATE_ITEM_QTY,
-      payload: { productId, variantId, quantity: next }
-    })
-  }
-
-  const removeItem = (productId, variantId) => {
-    dispatch({
-      type: ACTIONS.REMOVE_FROM_CART,
-      payload: { productId, variantId }
-    })
-  }
   
   const verifyCoupon = () => {
     if(!couponRef.current.reportValidity()) return
@@ -71,29 +40,16 @@ function Cart() {
       couponRef.current.setCustomValidity('Invalid or Expired Coupon')
   }
   
-  const { subtotal, discountedSub } = useMemo(() => {
-    const sub = cartState.reduce((acc, id) => {
-      const details = getProductVariantDetails(id.productId, id.variantId)
-      
-      const price = details?.variant?.stock > 0 ? details?.variant?.price || 0 : 0
-      const qty = Number(id.quantity || 0)
-      return acc + price * qty
-    }, 0)
-
-    const couponVal = (couponState?.type === 'percent' ? sub * (couponState?.discount / 100) : couponState?.discount) || 0
-
-    return {
-      subtotal: sub,
-      discountedSub: sub - couponVal
-    }
-  }, [cartState, couponState])
+  const discountedSub = useMemo(() => {
+    return getDiscountedSubtotal(couponState)
+  }, [couponState, getDiscountedSubtotal])
 
   const totalItems = useMemo(() => {
-    return cartState.reduce((acc, id) => acc + (Number(id.quantity || 0)), 0)
-  }, [cartState])
+    return cartTotals.totalItems
+  }, [cartTotals.totalItems])
 
   const initCheckout = () => {
-    if(containsOutOfStock) return toast.info("Remove out of stock items");
+    if(cartTotals.containsOutOfStock) return toast.info("Remove out of stock items");
     
     if(totalItems > 0) navigate('/checkout/information', { state: { fromValidSource: true } })
   }
@@ -119,14 +75,14 @@ function Cart() {
               </tr>
             </thead>
             <tbody>
-              {cartState.length === 0 ? (
+              {cart.length === 0 ? (
                 <tr>
                   <td colSpan="4" style={{ textAlign: 'center', padding: '40px' }}>
                     Your cart is empty
                   </td>
                 </tr>
               ) : (
-                cartState.map((item) => {
+                cart.map((item) => {
                   const { productId, variantId, quantity } = item
                   const details = getProductVariantDetails(productId, variantId)
                   
@@ -135,7 +91,6 @@ function Cart() {
                   const { product: { name, slug }, variant: { label, price, ruriCoin, stock } } = details
 
                   const isStocked = stock > 0
-                  totalRuriCoin += isStocked ? ruriCoin : 0
 
                   return (
                     <tr key={`${productId}-${variantId}`} className={cn({[s.notStocked]: !isStocked})}>
@@ -156,13 +111,13 @@ function Cart() {
                           {isStocked ?
                             <QuantityInput
                               state={quantity}
-                              setState={(next) => updateQty(productId, variantId, next)}
+                              setState={(next) => updateQuantity(productId, variantId, next)}
                               productID={`${productId}-${variantId}`}
                               min={1}
                             />
                             : <span>Out of Stock</span>
                           }
-                          <button className={s.removeBtn} onClick={() => removeItem(productId, variantId)}>
+                          <button className={s.removeBtn} onClick={() => removeFromCart(productId, variantId)}>
                             <img src={trashSVG} loading='lazy' alt="trash" />
                           </button>
                         </div>
@@ -195,16 +150,16 @@ function Cart() {
                 {couponState ? (
                   <>
                     <strong className={s.subtotal}>₱{discountedSub.toLocaleString()}</strong>
-                    <strong className={s.prevSubtotal}>₱{subtotal.toLocaleString()}</strong>
+                    <strong className={s.prevSubtotal}>₱{cartTotals.subtotal.toLocaleString()}</strong>
                   </>
                 ) : (
-                  <strong className={s.subtotal}>₱{subtotal.toLocaleString()}</strong>
+                  <strong className={s.subtotal}>₱{cartTotals.subtotal.toLocaleString()}</strong>
                 )}
               </div>
             </div>
-            {totalRuriCoin > 0 &&
+            {cartTotals.totalRuriCoin > 0 &&
               <div className={s.ruriCoin}>
-                <span>You will earn</span> <img src={ruriCoin} loading='lazy' alt="ruri coin" /> <strong>{totalRuriCoin}</strong> <span>Ruri Coins!</span>
+                <span>You will earn</span> <img src={ruriCoin} loading='lazy' alt="ruri coin" /> <strong>{cartTotals.totalRuriCoin}</strong> <span>Ruri Coins!</span>
               </div>
             }
           </div>

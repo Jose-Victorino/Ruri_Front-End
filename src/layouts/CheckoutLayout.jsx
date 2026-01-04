@@ -3,9 +3,9 @@ import { NavLink, Outlet, Navigate, useLocation } from 'react-router-dom'
 import { useGlobal, ACTIONS } from '@/context/GlobalContext'
 import cn from 'classnames'
 
-import OrderSummary from './OrderSummary'
+import OrderSummary from '../routes/Checkout/OrderSummary'
 
-import s from './Layout.module.scss'
+import s from './CheckoutLayout.module.scss'
 
 function Layout() {
   const { state, dispatch } = useGlobal()

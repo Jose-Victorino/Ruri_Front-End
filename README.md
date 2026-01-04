@@ -7,10 +7,10 @@
 - [x] `ALL POLICY` - UI
 - [x] `PRODUCT, ITEM, CART, CHECKOUT` - Handle out of stock
 - [ ] `ORDER CONFIRMATION` - UI
-- [ ] `NAVIGATION, CART, CHECKOUT` - User functionality
+- [x] `NAVIGATION, CART, CHECKOUT` - User functionality
 - [ ] `NAVIGATION` - Search bar functionality
 - [ ] `SEARCH RESULT` - UI
-- [ ] `LOGIN` - forgot password
+- [x] `LOGIN` - forgot password
 - [ ] `PROFILE` - UI & functionality
 - [ ] App wide notification system **On-going**
 

@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom'
 import { useGlobal, ACTIONS } from '@/context/GlobalContext'
 import cn from 'classnames'
 
-import { ScrollResetEffect, wordCap } from '@/library/Util'
+import { ScrollResetEffect } from '@/library/Util'
+import Button from '@/components/Button/Button'
 
 import s from './Payment.module.scss'
 
@@ -139,7 +140,12 @@ function Payment() {
               </li>
             </ul>
             <p>Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <Link>privacy policy.</Link></p>
-            <button type='button' className={s.submitBtn}>Proceed to Next Step</button>
+            <Button
+              text='Proceed to Next Step'
+              type='button'
+              color='yellow'
+              corners='sharp'
+            />
           </Form>
         )}
       </Formik>

@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import cn from 'classnames'
 
+import Button from '@/components/Button/Button'
+
 import s from './StoreLocations.module.scss'
 
 import checkIcon from 'svg/check.svg'
@@ -88,7 +90,10 @@ function StoreLocations() {
                 <div className={s.distanceVal}>{distance}km</div>
               </div>
             </div>
-            <button>Search</button>
+            <Button
+              text='Search'
+              color='green'
+            />
           </div>
         </div>
         <div className={s.main}>
@@ -135,7 +140,11 @@ function StoreLocations() {
                   <div>
                     <input className={s.input} type="text" name={`user_location-${store.id}`} placeholder="Enter Location" autoComplete='off'/>
                   </div>
-                  <button className={s.submit}>Go</button>
+                  <Button
+                    style={{width: 'fit-content'}}
+                    text='Go'
+                    color='green'
+                  />
                 </div>
               )
             })}

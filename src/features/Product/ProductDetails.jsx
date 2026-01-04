@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
-import { toast } from 'react-toastify';
-import { useGlobal, ACTIONS } from '@/context/GlobalContext'
+import { useGlobal } from '@/context/GlobalContext'
+import { useCart } from '@/hooks/useCart'
 import cn from 'classnames'
 
 import NotFound from '@/components/NotFound/NotFound'
@@ -11,8 +11,6 @@ import Rating from '@/components/Rating/Rating'
 import { ScrollResetEffect } from '@/library/Util'
 
 import s from './ProductDetails.module.scss'
-
-import productImage from '@/assets/461087521_843841854602360_6475783316939153006_n.png'
 
 import arrowLeft from 'svg/arrow-left.svg'
 import arrowRight from 'svg/arrow-right.svg'
@@ -101,8 +99,9 @@ const UserRating = ({name, date, rating, review}) => (
 )
 
 function Product() {  
-  const { state, dispatch } = useGlobal()
+  const { state } = useGlobal()
   const { productName } = useParams()
+  const { addToCart } = useCart()
 
   const [selectedVariant, setSelectedVariant] = useState(null)
   const [quantity, setQuantity] = useState(1)
@@ -189,7 +188,7 @@ function Product() {
     setCurrentPage(pageNum)
   }
   
-  const addToCart = () => {
+  const handleAddToCart = () => {
     if (!isOneVariant && !selectedVariant) {
       setVariantError('Please select a variant')
       return
@@ -208,26 +207,11 @@ function Product() {
       return
     }
 
-    const cartItem = {
-      productId,
-      variantId,
-      quantity
+    const success = addToCart(productId, variantId, quantity)
+    if (success) {
+      setQuantity(1)
+      setSelectedVariant(null)
     }
-
-    const existingCartIndex = state.cart.findIndex(
-      item => item.productId === productId && item.variantId === variantId
-    )
-
-    let updatedCart
-    if (existingCartIndex > -1) {
-      updatedCart = [...state.cart]
-      updatedCart[existingCartIndex].quantity += quantity
-    } else {
-      updatedCart = [...state.cart, cartItem]
-    }
-
-    dispatch({ type: ACTIONS.ADD_TO_CART, payload: updatedCart })
-    toast.success("Item has been added to cart")
   }
 
   return (
@@ -317,7 +301,7 @@ function Product() {
                 <span>Purchase this product now and earn</span> <img src={ruriCoin} loading='lazy' alt="ruri coin" /> <strong>{ruriCoinVal}</strong> <span>Ruri Coins!</span>
               </div>
             }
-            <button className={s.addToCart} onClick={() => addToCart()} disabled={!isCurrentlyStocked}>
+            <button className={s.addToCart} onClick={() => handleAddToCart()} disabled={!isCurrentlyStocked}>
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M21 5L19 12H7.37671M20 16H8L6 3H3M16 5.5H13.5M13.5 5.5H11M13.5 5.5V8M13.5 5.5V3M9 20C9 20.5523 8.55228 21 8 21C7.44772 21 7 20.5523 7 20C7 19.4477 7.44772 19 8 19C8.55228 19 9 19.4477 9 20ZM20 20C20 20.5523 19.5523 21 19 21C18.4477 21 18 20.5523 18 20C18 19.4477 18.4477 19 19 19C19.5523 19 20 19.4477 20 20Z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>

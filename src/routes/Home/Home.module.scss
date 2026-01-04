@@ -41,21 +41,6 @@
     align-items: center;
     gap: 15px;
     margin-top: 10px;
-
-    button{
-      background: base.$secondary-color;
-      padding: 0.75em 1.25em;
-      line-height: 1.5;
-      border-radius: 2em;
-
-      a{
-        color: white;
-      }
-      
-      &:hover{
-        background: base.$secondary-dark;
-      }
-    }
   }
 }
 
@@ -115,21 +100,6 @@
     span{
       font-size: inherit;
       color: base.$primary-light;
-    }
-  }
-
-  button{
-    background: base.$secondary-color;
-    padding: 0.75em 1.25em;
-    line-height: 1.5;
-    border-radius: 2em;
-    margin-top: 15px;
-
-    a{
-      color: white;
-    }
-    &:hover{
-      background: base.$secondary-dark;
     }
   }
 }

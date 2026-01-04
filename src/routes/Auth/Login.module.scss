@@ -60,17 +60,6 @@
   }
 }
 
-.submitBtn{
-  background: base.$primary-light;
-  color: white;
-  padding: 0.75em 1.25em;
-  border-radius: 6px;
-  
-  &:hover{
-    background: base.$primary-color;
-  }
-}
-
 .alt{
   background: base.$gs-w-90;
   padding: 15px;

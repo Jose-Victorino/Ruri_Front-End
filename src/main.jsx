@@ -16,9 +16,10 @@ import Policies from "@/routes/Policy/Policy"
 import Category from '@/features/Product/Category'
 import ProductDetails from '@/features/Product/ProductDetails'
 import Cart from '@/features/Product/Cart'
-import CheckoutLayout from '@/routes/Checkout/Layout'
+import CheckoutLayout from '@/layouts/CheckoutLayout'
 import CheckoutInformation from './routes/Checkout/Information'
 import CheckoutPayment from './routes/Checkout/Payment'
+import OrderConfirmation from './routes/OrderConfirmation/OrderConfirmation'
 import AuthLayout from '@/layouts/AuthLayout'
 import Login from '@/routes/Auth/Login'
 import ForgotPassword from '@/routes/Auth/ForgotPassword'
@@ -55,6 +56,7 @@ createRoot(document.getElementById('root')).render(
             <Route path='Information' element={<CheckoutInformation />}/>
             <Route path='Payment' element={<CheckoutPayment />}/>
           </Route>
+          <Route path='order-confirmation' element={<OrderConfirmation />}/>
         </Route>
         <Route path='/auth' element={<AuthLayout />}>
           <Route path='login' element={<Login />}/>

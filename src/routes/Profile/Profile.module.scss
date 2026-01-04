@@ -28,10 +28,6 @@ body:has(.profile){
   gap: 15px;
   
   button{
-    svg{
-      fill: base.$link-color;
-
-    }
     img, svg{
       height: 1em;
       width: 1em;
@@ -40,12 +36,37 @@ body:has(.profile){
 }
 
 .addAddressBtn{
+  background: base.$secondary-light;
   display: flex;
   align-items: center;
+  padding: 0.75em 1em;
   gap: 5px;
-  color: base.$link-color;
-
+  color: white;
+  border-radius: 6px;
+  line-height: 1;
+  
   &:hover{
-    text-decoration: underline;
+    background: base.$secondary-color;
+  }
+  svg{
+    fill: white;
+  }
+}
+.addressItem{
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding-top: 20px;
+
+  &:not(:last-child){
+    padding-bottom: 20px;
+    border-bottom: 1px solid base.$gs-w-60;
+  }
+
+  .defaultTxt{
+    font-size: 0.8em;
+    width: fit-content;
+    padding: 4px;
+    border: 1px solid base.$gs-w-60;
   }
 }

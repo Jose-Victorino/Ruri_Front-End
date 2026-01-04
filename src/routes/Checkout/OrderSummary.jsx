@@ -1,5 +1,6 @@
 import { useState, useRef, useMemo } from 'react'
 import { useGlobal, ACTIONS } from '@/context/GlobalContext'
+import { useCart } from '@/hooks/useCart'
 import cn from 'classnames'
 
 import QuantityInput from '@/components/QuantityInput/QuantityInput'
@@ -11,33 +12,20 @@ import ruriCoin from '@/assets/svg/ruri-coin.svg'
 
 function OrderSummary () {
   const { state, dispatch } = useGlobal()
-  const [ showOrder, setShowOrder ] = useState(false)
+  const { cart, removeFromCart, updateQuantity, getProductVariantDetails, cartTotals, getDiscountedSubtotal } = useCart()
+  const [showOrder, setShowOrder] = useState(false)
   const couponState = state?.checkoutInformation?.coupon
-  const cartState = state.cart || []
   const couponRef = useRef(null)
 
   const shipping = state?.checkoutInformation?.shipping || ''
 
-  const getProductVariantDetails = (productId, variantId) => {
-    const product = state.PRODUCTS.find(p => p.productId === productId)
-    if (!product) return null
-    const variant = product.variants.find(v => v.variantId === variantId)
-    return { product, variant }
-  }
+  const shippingVal = shipping === 'Weight Based Shipping' ? 250 : 0
 
-  const updateQty = (productId, variantId, next) => {
-    dispatch({
-      type: ACTIONS.UPDATE_ITEM_QTY,
-      payload: { productId, variantId, quantity: next }
-    })
-  }
+  const discountedSub = useMemo(() => {
+    return getDiscountedSubtotal(couponState) + shippingVal
+  }, [couponState, getDiscountedSubtotal])
 
-  const removeItem = (productId, variantId) => {
-    dispatch({
-      type: ACTIONS.REMOVE_FROM_CART,
-      payload: { productId, variantId }
-    })
-  }
+  const { totalItems, totalRuriCoins, subtotal } = cartTotals
 
   const verifyCoupon = () => {
     if(!couponRef.current.reportValidity()) return
@@ -54,37 +42,6 @@ function OrderSummary () {
     else
       couponRef.current.setCustomValidity('Invalid or Expired Coupon')
   }
-
-  const shippingVal = shipping === 'Weight Based Shipping' ? 250 : 0
-
-  const { subtotal, discountedSub } = useMemo(() => {
-    const sub = cartState.reduce((acc, id) => {
-      const details = getProductVariantDetails(id.productId, id.variantId)
-      const price = details?.variant?.price || 0
-      const qty = Number(id.quantity || 0)
-      return acc + price * qty
-    }, 0)
-
-    const couponVal = (couponState?.type === 'percent' ? sub * (couponState?.discount / 100) : couponState?.discount) || 0
-
-    return {
-      subtotal: sub,
-      discountedSub: sub + shippingVal - couponVal
-    }
-  }, [cartState, couponState])  
-
-  const totalItems = useMemo(() => {
-    return cartState.reduce((acc, it) => acc + (Number(it.quantity || 0)), 0)
-  }, [cartState])
-
-  const totalRuriCoins = useMemo(() => {
-    return cartState.reduce((acc, id) => {
-      const details = getProductVariantDetails(id.productId, id.variantId)
-      
-      return acc + details.variant.ruriCoin
-      
-    }, 0)
-  }, [cartState])
 
   return (
     <section className={cn(s.orderSummary, { [s.show]: showOrder })}>
@@ -113,7 +70,7 @@ function OrderSummary () {
       <div className={s.content} aria-hidden={!showOrder}>
         <table>
           <tbody>
-            {cartState.map((item) => {
+            {cart?.map((item) => {
               const { productId, variantId, quantity } = item
               const details = getProductVariantDetails(productId, variantId)
 
@@ -141,7 +98,7 @@ function OrderSummary () {
                         {isStocked ?
                           <QuantityInput
                             state={quantity}
-                            setState={(next) => updateQty(productId, variantId, next)}
+                            setState={(next) => updateQuantity(productId, variantId, next)}
                             productID={`${productId}-${variantId}`}
                             min={1}
                           />
@@ -153,7 +110,7 @@ function OrderSummary () {
                   <td>
                     <div className='flex-wrap j-end gap-5'>
                       <span>₱{(quantity * price).toLocaleString()}</span>
-                      <button className={s.removeBtn} onClick={() => removeItem(productId, variantId)}>
+                      <button className={s.removeBtn} onClick={() => removeFromCart(productId, variantId)}>
                         <img src={trashSVG} loading='lazy' alt="trash" />
                       </button>
                     </div>

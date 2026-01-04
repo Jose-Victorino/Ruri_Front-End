@@ -1,15 +1,14 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify';
-import { useGlobal, ACTIONS } from '@/context/GlobalContext'
+import { useCart } from '@/hooks/useCart'
 
 import s from './ProductCard.module.scss'
 import cartPlus from 'svg/cart-plus.svg'
 
 function ProductCard(props) {
   const { productId, name, slug, variants } = props
-  const { state, dispatch } = useGlobal()
   const navigate = useNavigate()
+  const { addToCart } = useCart()
 
   const isOneVariant = variants.length === 1
   const isStocked = variants.map(v => v.stock).reduce((a, b) => a + b) > 0
@@ -29,27 +28,8 @@ function ProductCard(props) {
     if(!isStocked) return
 
     if(isOneVariant){
-      const { variantId } = variants[0];
-      const cartItem = {
-        productId,
-        variantId,
-        quantity: 1,
-      }
-
-      const existingCartIndex = state.cart.findIndex(
-        item => item.productId === productId && item.variantId === variantId
-      )
-
-      let updatedCart
-      if (existingCartIndex > -1) {
-        updatedCart = [...state.cart]
-        updatedCart[existingCartIndex].quantity++
-      } else {
-        updatedCart = [...state.cart, cartItem]
-      }
-
-      dispatch({ type: ACTIONS.ADD_TO_CART, payload: updatedCart })
-      toast.success("Item has been added to cart")
+      const { variantId } = variants[0]
+      addToCart(productId, variantId, 1)
     }
     else{
       navigate(`/product/${slug}`)

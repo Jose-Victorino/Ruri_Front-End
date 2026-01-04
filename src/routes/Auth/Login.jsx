@@ -5,6 +5,8 @@ import * as Yup from 'yup'
 import { toast } from 'react-toastify';
 import { useGlobal, ACTIONS } from '@/context/GlobalContext'
 
+import Button from '@/components/Button/Button'
+
 import s from './Login.module.scss'
 
 import eyeIcon from 'svg/eye.svg'
@@ -12,7 +14,8 @@ import eyeSlashIcon from 'svg/eye-slash.svg'
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
-    .email('Invalid email address').required('Email is required'),
+    .email('Invalid email address')
+    .required('Email is required'),
   password: Yup.string()
     .min(8, 'Password must be 8 characters minimum')
     .matches(/[a-z]/, 'Password requires a lowercase letter')
@@ -74,7 +77,11 @@ function Login() {
                   <NavLink to='/auth/login/forgot-password'>Forgot your password?</NavLink>
                 </div>
               </div>
-              <button className={s.submitBtn} type='submit'>Login</button>
+              <Button
+                type='submit'
+                text='Login'
+                color='green'
+              />
             </Form>
           ) 
         }}

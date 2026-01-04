@@ -4,6 +4,8 @@ import { Formik, Field, Form } from 'formik'
 import * as Yup from 'yup'
 import { useGlobal, ACTIONS } from '@/context/GlobalContext'
 
+import Button from '@/components/Button/Button'
+
 import s from './SignUp.module.scss'
 
 import eyeIcon from 'svg/eye.svg'
@@ -86,7 +88,11 @@ function SignUp() {
                   <Field className={s.txtField} type='date' name='birthday' placeholder='' required/>
                 </div>
               </div>
-              <button className={s.submitBtn} type='submit'>Register</button>
+              <Button
+                type='submit'
+                text='Send'
+                color='green'
+              />
             </Form>
           )
         }}

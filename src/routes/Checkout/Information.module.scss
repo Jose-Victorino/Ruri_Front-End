@@ -55,23 +55,6 @@
 }
 
 .information{
-  .inputCont{
-    flex-grow: 1;
-
-    label{
-      font-size: base.$sz-12-14;
-      line-height: 1;
-    }
-    input, select{
-      @include base.input();
-      @include base.input-hide-spinner();
-
-      &.error{
-        border-color: red;
-        background-color: rgba(255, 0, 0, 0.05);
-      }
-    }
-  }
   .inputGroup{
     display: flex;
     gap: 15px;
@@ -81,17 +64,6 @@
 .errorMsg{
   color: hsl(0, 65%, 51%);
   font-size: 0.85rem;
-}
-
-.submitBtn{
-  background: base.$secondary-light;
-  padding: 0.5em 1em;
-  line-height: 1.5;
-  color: white;  
-
-  &:hover{
-    background: base.$secondary-color;
-  }
 }
 
 @media(max-width: 980px){

@@ -75,14 +75,3 @@
     height: 30px;
   }
 }
-
-.submitBtn{
-  background: base.$secondary-light;
-  padding: 0.5em 1em;
-  line-height: 1.5;
-  color: white;  
-
-  &:hover{
-    background: base.$secondary-color;
-  }
-}

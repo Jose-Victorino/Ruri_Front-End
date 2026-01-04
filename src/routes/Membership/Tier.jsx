@@ -1,6 +1,9 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useGlobal } from '@/context/GlobalContext'
 import cn from 'classnames'
+
+import Button from '@/components/Button/Button'
 
 import s from './Tier.module.scss'
 
@@ -16,6 +19,7 @@ const TIER_ICONS = {
 
 function Tier({name, desc}) {
   const navigate = useNavigate()
+    const { state } = useGlobal()
 
   return (
     <li className={cn(s.tier, s[`tier-${name}`])}>
@@ -24,14 +28,16 @@ function Tier({name, desc}) {
         <h3>{name}</h3>
       </div>
       <p>{desc}</p>
-      <button
-        onClick={() => navigate({
-          pathname: '/auth/sign-up',
-          search: `membership=${name}`
-        })}
-      >
-        Join Now
-      </button>
+      {!state.auth.user?.userId &&
+        <Button
+          text='Join Now'
+          color='yellow'
+          onClick={() => navigate({
+            pathname: '/auth/sign-up',
+            search: `membership=${name}`
+          })}
+        />
+      }
     </li>
   )
 }
