@@ -34,7 +34,7 @@ function Information() {
   const { state, dispatch } = useGlobal()
   const navigate = useNavigate()
 
-  const user = state.auth.user
+  const { user } = state.auth
   const defaultAddress = user?.address?.find(addr => addr.isDefault) || null
 
   const defaultState = {
@@ -54,7 +54,7 @@ function Information() {
     termsAndConditions: false,
     mop: '',
   }
-  const informationState = user?.userId ? { ...defaultState, ...state.checkoutInformation } : { ...state.checkoutInformation, ...defaultState }
+  const informationState = { ...defaultState, ...state.checkoutInformation }
   
   ScrollResetEffect()
 
@@ -145,7 +145,7 @@ function Information() {
                 <Input displayName='Last Name' input={{type: 'text', name: 'lastName', id: 'lastName', required: true, onChange: (e) => handleInputChange(e.target)}} error={errors.lastName} touched={touched.lastName}/>
               </div>
               <Input input={{type:'text', name: 'email', id: 'email', required: true, onChange: (e) => handleInputChange(e.target)}} error={errors.email} touched={touched.email}/>
-              <Input displayName='Phone Number' input={{type:'number', name: 'phoneNumber', id: 'phoneNumber', required: true, onChange: (e) => handleInputChange(e.target)}} error={errors.phoneNumber} touched={touched.phoneNumber}/>
+              <Input displayName='Phone Number' input={{type:'text', name: 'phoneNumber', id: 'phoneNumber', required: true, onChange: (e) => handleInputChange(e.target)}} error={errors.phoneNumber} touched={touched.phoneNumber}/>
               <Input input={{type: 'text', name: 'barangay', id: 'barangay', onChange: (e) => handleInputChange(e.target)}} error={errors.barangay} touched={touched.barangay}/>
               <Input input={{type:'text', name: 'street', id: 'street', required: true, onChange: (e) => handleInputChange(e.target)}} error={errors.street} touched={touched.street}/>
               <div className={s.inputGroup}>

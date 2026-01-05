@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { Formik, Field, Form } from 'formik'
 import * as Yup from 'yup'
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'
 import { useGlobal, ACTIONS } from '@/context/GlobalContext'
 
 import Button from '@/components/Button/Button'

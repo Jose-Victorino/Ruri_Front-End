@@ -1,7 +1,5 @@
 import React from 'react'
 
-import { ScrollResetEffect } from '@/library/Util'
-
 import s from './Policy.module.scss'
 
 function Policy() {

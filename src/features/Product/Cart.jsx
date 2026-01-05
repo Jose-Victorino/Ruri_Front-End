@@ -1,6 +1,6 @@
 import { useRef, useMemo } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'
 import { useGlobal, ACTIONS } from '@/context/GlobalContext'
 import { useCart } from '@/hooks/useCart'
 import cn from 'classnames'

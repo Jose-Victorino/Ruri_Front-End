@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify'
 import { GlobalProvider } from '@/context/GlobalContext'
 
 import '@/styles/reset.scss'

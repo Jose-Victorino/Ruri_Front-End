@@ -25,7 +25,7 @@ function OrderSummary () {
     return getDiscountedSubtotal(couponState) + shippingVal
   }, [couponState, getDiscountedSubtotal])
 
-  const { totalItems, totalRuriCoins, subtotal } = cartTotals
+  const { totalItems, totalRuriCoin, subtotal } = cartTotals
 
   const verifyCoupon = () => {
     if(!couponRef.current.reportValidity()) return
@@ -59,9 +59,9 @@ function OrderSummary () {
           </svg>
         </div>
         <div className='flex j-center a-center gap-20'>
-          {totalRuriCoins > 0 &&
+          {totalRuriCoin > 0 &&
             <div className='flex gap-5 a-center'>
-              <img src={ruriCoin} loading='lazy' alt="ruri coin" /> <b>{totalRuriCoins}</b>
+              <img src={ruriCoin} loading='lazy' alt="ruri coin" /> <b>{totalRuriCoin}</b>
             </div>
           }
           <strong>₱{discountedSub}</strong>
@@ -146,9 +146,9 @@ function OrderSummary () {
           <b>Total ({totalItems} {totalItems > 1 ? 'items' : 'item'})</b>
           <strong>₱{discountedSub}</strong>
         </div>
-        {totalRuriCoins > 0 &&
+        {totalRuriCoin > 0 &&
           <div className={s.ruriCoin}>
-            <span>Complete your order and earn</span> <img src={ruriCoin} loading='lazy' alt="ruri coin" /> <strong>{totalRuriCoins}</strong> <span>Ruri Coins for a discount on a future purchase</span>
+            <span>Complete your order and earn</span> <img src={ruriCoin} loading='lazy' alt="ruri coin" /> <strong>{totalRuriCoin}</strong> <span>Ruri Coins for a discount on a future purchase</span>
           </div>
         }
       </div>

@@ -1,17 +1,8 @@
 ## TODO:
-- [x] `CART` UI
-- [x] `ITEM` - add to cart functionality
-- [x] `STORE LOCATOR` UI
-- [x] `PRODUCT` - review UI
-- [x] `CHECKOUT` UI
-- [x] `ALL POLICY` - UI
-- [x] `PRODUCT, ITEM, CART, CHECKOUT` - Handle out of stock
-- [ ] `ORDER CONFIRMATION` - UI
-- [x] `NAVIGATION, CART, CHECKOUT` - User functionality
+- [x] `ORDER CONFIRMATION` - UI
 - [ ] `NAVIGATION` - Search bar functionality
 - [ ] `SEARCH RESULT` - UI
-- [x] `LOGIN` - forgot password
-- [ ] `PROFILE` - UI & functionality
+- [x] `PROFILE` - UI & functionality
 - [ ] App wide notification system **On-going**
 
 # Ruri

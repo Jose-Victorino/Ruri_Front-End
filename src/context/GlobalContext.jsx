@@ -15,6 +15,12 @@ const ACTIONS = {
 
   SET_CHECKOUT_INFORMATION: 'SET_CHECKOUT_INFORMATION',
   UPDATE_CHECKOUT_INFORMATION: 'UPDATE_CHECKOUT_INFORMATION',
+  
+  SET_USER_INFORMATION: 'SET_USER_INFORMATION',
+  DELETE_ADDRESS: 'DELETE_ADDRESS',
+  SET_DEFAULT_ADDRESS: 'SET_DEFAULT_ADDRESS',
+  ADD_ADDRESS: 'ADD_ADDRESS',
+  UPDATE_ADDRESS: 'UPDATE_ADDRESS',
 }
 
 function reducer(state, action) {
@@ -119,6 +125,105 @@ function reducer(state, action) {
           [payload.name]: payload.value,
         }
       }
+    case ACTIONS.SET_USER_INFORMATION:
+      const updatedUser = {
+        ...state.auth.user,
+        ...payload
+      }
+      return { ...state,
+        auth: { user: updatedUser },
+        USERS: state.USERS.map(u =>
+          u.userId === state.auth.user.userId
+            ? { ...u, ...updatedUser }
+            : u
+        )
+      }
+    case ACTIONS.DELETE_ADDRESS: {
+      const updatedUser = {
+        ...state.auth.user,
+        address: state.auth.user.address.filter(a => a.addressId !== payload)
+      }
+      return {
+        ...state,
+        auth: { user: updatedUser },
+        USERS: state.USERS.map(u =>
+          u.userId === state.auth.user.userId
+            ? { ...u, address: updatedUser.address }
+            : u
+        )
+      }
+    }
+    case ACTIONS.SET_DEFAULT_ADDRESS: {
+      const updatedUser = {
+        ...state.auth.user,
+        address: state.auth.user.address.map(a => ({
+          ...a,
+          isDefault: a.addressId === payload
+        }))
+      }
+      return {
+        ...state,
+        auth: { user: updatedUser },
+        USERS: state.USERS.map(u =>
+          u.userId === state.auth.user.userId
+            ? { ...u, address: updatedUser.address }
+            : u
+        )
+      }
+    }
+    case ACTIONS.ADD_ADDRESS: {
+      const newAddress = {
+        ...payload,
+        addressId: Date.now(),
+        isDefault: payload.isDefault || false
+      }
+      const updatedAddresses = payload.isDefault 
+        ? state.auth.user.address.map(a => ({ ...a, isDefault: false })).concat(newAddress)
+        : [...state.auth.user.address, newAddress]
+      const updatedUser = {
+        ...state.auth.user,
+        address: updatedAddresses
+      }
+      return {
+        ...state,
+        auth: { user: updatedUser },
+        USERS: state.USERS.map(u =>
+          u.userId === state.auth.user.userId
+            ? { ...u, address: updatedAddresses }
+            : u
+        )
+      }
+    }
+    case ACTIONS.UPDATE_ADDRESS: {
+      const updatedAddresses = state.auth.user.address.map(a => {
+        if(a.addressId === payload.addressId) {
+          const updatedAddress = { ...a, ...payload }
+          // If setting this as default, unset other defaults
+          if(payload.isDefault) {
+            return updatedAddress
+          }
+          return updatedAddress
+        }
+        // Unset isDefault on other addresses if this one is being set as default
+        if(payload.isDefault && a.isDefault) {
+          return { ...a, isDefault: false }
+        }
+        return a
+      })
+      const updatedUser = {
+        ...state.auth.user,
+        address: updatedAddresses
+      }
+      return {
+        ...state,
+        auth: { user: updatedUser },
+        USERS: state.USERS.map(u =>
+          u.userId === state.auth.user.userId
+            ? { ...u, address: updatedAddresses }
+            : u
+        )
+      }
+    }
     default:
       return state
   }

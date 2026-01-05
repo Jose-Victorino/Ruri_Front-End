@@ -87,7 +87,7 @@ export function useCart() {
 
       totalItems += item.quantity
     })
-
+    
     return {
       subtotal,
       totalRuriCoin,
