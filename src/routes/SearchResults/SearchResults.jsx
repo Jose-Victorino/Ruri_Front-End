@@ -6,7 +6,7 @@ import cn from 'classnames'
 
 import ProductCard from '@/features/Product/ProductCard'
 
-import s from './searchResults.module.scss'
+import s from './SearchResults.module.scss'
 
 import arrowLeft from 'svg/arrow-left.svg'
 import arrowRight from 'svg/arrow-right.svg'

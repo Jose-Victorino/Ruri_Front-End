@@ -106,6 +106,8 @@ function Navigation() {
   }
 
   const handleSearchSubmit = ({ search }) => {
+    if(!search) return
+
     navigate({
       pathname: '/s',
       search: `?s=${search}`

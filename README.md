@@ -1,8 +1,3 @@
-## TODO:
-- [x] `NAVIGATION` - Search bar functionality
-- [x] `SEARCH RESULT` - UI
-- [x] App wide notification system
-
 # Ruri
 
 >A small React + Vite storefront and membership UI.
