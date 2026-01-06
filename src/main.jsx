@@ -8,12 +8,13 @@ import '@/styles/vars.scss'
 
 import App from '@/App.jsx'
 import Home from '@/routes/Home/Home.jsx'
+import SearchResults from '@/routes/SearchResults/SearchResults'
 import Membership from "@/routes/Membership/Membership"
 import FAQs from "@/routes/FAQs/FAQs"
 import TrackOrder from "@/routes/TrackOrder/TrackOrder"
 import StoreLocations from "@/routes/StoreLocations/StoreLocations"
 import Policies from "@/routes/Policy/Policy"
-import Category from '@/features/Product/Category'
+import Category from '@/routes/Category/Category'
 import ProductDetails from '@/features/Product/ProductDetails'
 import Cart from '@/features/Product/Cart'
 import CheckoutLayout from '@/layouts/CheckoutLayout'
@@ -41,6 +42,7 @@ createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path='/' element={<App />}>
           <Route index element={<Home />}/>
+          <Route path='s' element={<SearchResults />}/>
           <Route path='membership' element={<Membership />}/>
           <Route path='faqs' element={<FAQs />}/>
           <Route path='track-order' element={<TrackOrder />}/>

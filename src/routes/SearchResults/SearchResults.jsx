@@ -1,25 +1,26 @@
 import { useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { useGlobal, ACTIONS } from '@/context/GlobalContext'
-import { wordCap, ScrollResetEffect } from '@/library/Util'
+import { useSearchParams } from 'react-router-dom'
+import { useGlobal } from '@/context/GlobalContext'
+import { ScrollResetEffect } from '@/library/Util'
 import cn from 'classnames'
 
-import ProductCard from './ProductCard'
+import ProductCard from '@/features/Product/ProductCard'
 
-import s from './Category.module.scss'
+import s from './searchResults.module.scss'
 
 import arrowLeft from 'svg/arrow-left.svg'
 import arrowRight from 'svg/arrow-right.svg'
 
 const SORT_BY_TYPES = ['Default', 'Popularity', 'latest', 'Average Rating', 'Price (low to high)', 'Price (high to low)']
 
-function Category() {
-  const { categoryName } = useParams()
-  const { state, dispatch } = useGlobal()
+function SearchResults() {
+  const [searchParams] = useSearchParams()
+  const { state } = useGlobal()
 
-  const products = state.PRODUCTS.filter((p) => p.categorySlug === categoryName)
+  const searchQuery = searchParams.get('s')
+  const products = state.PRODUCTS.filter((p) => p.categorySlug === 'csa-boxes')
 
-  document.title = `RURI CLUB | ${wordCap(categoryName.replaceAll('-', ' '))}`
+  document.title = `RURI CLUB | ${searchQuery}`
   
   const [currentSort, setCurrentSort] = useState('Default')
   const [currentPage, setCurrentPage] = useState(1)
@@ -50,7 +51,7 @@ function Category() {
   ScrollResetEffect()
 
   return (
-    <section className={s.category}>
+    <section className={s.searchResults}>
       {products?.length ?
         <div className='container flex-col gap-20'>
           <h3>{products.length} products found</h3>
@@ -98,11 +99,11 @@ function Category() {
           )}
         </div>
         : <div className={cn('container', s.nullHeader)}>
-          <span>There are not products available in this category</span>
+          <span>Not products found</span>
         </div>
       }
     </section>
   )
 }
 
-export default Category
+export default SearchResults

@@ -1,9 +1,7 @@
 ## TODO:
-- [x] `ORDER CONFIRMATION` - UI
-- [ ] `NAVIGATION` - Search bar functionality
-- [ ] `SEARCH RESULT` - UI
-- [x] `PROFILE` - UI & functionality
-- [ ] App wide notification system **On-going**
+- [x] `NAVIGATION` - Search bar functionality
+- [x] `SEARCH RESULT` - UI
+- [x] App wide notification system
 
 # Ruri
 

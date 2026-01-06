@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { useGlobal, ACTIONS } from '@/context/GlobalContext'
+import { Formik, Field, Form } from 'formik'
 import cn from 'classnames'
 
 import s from './Navigation.module.scss'
@@ -71,13 +72,19 @@ const bottomNavLinks = [
 function Navigation() {
   const { state, dispatch } = useGlobal()
   const navigate = useNavigate()
+  const location = useLocation()
   const [menuOpen, setMenuOpen] = useState(false)
   const menuRef = useRef(null)
   const burgerRef = useRef(null)
   const closeBtnRef = useRef(null)
+  const searchRef = useRef(null)
 
   const { user } = state.auth
   const itemsInCart = state.cart?.length || 0
+
+  useEffect(() => {
+    searchRef.current.value = ''
+  }, [location.pathname])
 
   const closeMenu = () => {
     if (menuRef.current && menuRef.current.contains(document.activeElement)) {
@@ -98,36 +105,11 @@ function Navigation() {
     toast.success('Logged Out Successfully')
   }
 
-  const AuthNav = () => {
-    return (
-      <nav className={cn(s.authNav)}>
-        {user.firstName ? (
-          <button className={s.user} popoverTarget='user-options' id="user">
-            <img src={circleUser} loading='lazy' alt="user" />
-            <span>{`${user.firstName} ${user.lastName}`}</span>
-          </button>
-        ) : (
-          <div className='flex a-center gap-5'>
-            <NavLink to='/auth/login' className={({isActive}) => cn({ [s.active] : isActive })}>
-              Login
-            </NavLink>{' / '}
-            <NavLink to='/auth/sign-up' className={({isActive}) => cn({ [s.active] : isActive })}>
-              Sign up
-            </NavLink>
-          </div>
-        )}
-        <div id='user-options' className={s.options} popover='auto' anchor="user">
-          <ul className='flex-col'>
-            <li>
-              <button onClick={() => navigate('/user/profile')}>Profile</button>
-            </li>
-            <li>
-              <button onClick={() => handleLogout()}>Logout</button>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    )
+  const handleSearchSubmit = ({ search }) => {
+    navigate({
+      pathname: '/s',
+      search: `?s=${search}`
+    })
   }
 
   return (
@@ -144,7 +126,33 @@ function Navigation() {
             </ul>
           </nav>
           <div className='flex gap-30'>
-            <AuthNav />
+            <nav className={cn(s.authNav)}>
+              {user.firstName ? (
+                <button className={s.user} popoverTarget='user-options' id="user">
+                  <img src={circleUser} loading='lazy' alt="user" />
+                  <span>{`${user.firstName} ${user.lastName}`}</span>
+                </button>
+              ) : (
+                <div className='flex a-center gap-5'>
+                  <NavLink to='/auth/login' className={({isActive}) => cn({ [s.active] : isActive })}>
+                    Login
+                  </NavLink>{' / '}
+                  <NavLink to='/auth/sign-up' className={({isActive}) => cn({ [s.active] : isActive })}>
+                    Sign up
+                  </NavLink>
+                </div>
+              )}
+              <div id='user-options' className={s.options} popover='auto' anchor="user">
+                <ul className='flex-col'>
+                  <li>
+                    <button onClick={() => navigate('/user/profile')}>Profile</button>
+                  </li>
+                  <li>
+                    <button onClick={() => handleLogout()}>Logout</button>
+                  </li>
+                </ul>
+              </div>
+            </nav>
             <button className={s.cart} onClick={() => navigate('/cart')}>
               <img src={cartShopping} alt="cart" />
               <div>{itemsInCart}</div>
@@ -171,12 +179,21 @@ function Navigation() {
               )}
             </ul>
           </nav>
-          <div className={s.searchBar}>
-            <input type="text" name='search' placeholder='Search...' autoComplete="false"/>
-            <button>
-              <img src={magnifyingGlass} loading="lazy" alt="search" />
-            </button>
-          </div>
+          <Formik
+            initialValues={{search: ''}}
+            onSubmit={handleSearchSubmit}
+          >
+            {({ values, setFieldValue }) => {
+              return (
+                <Form className={s.searchBar}>
+                  <Field ref={searchRef} type="text" name='search' placeholder='Search...' autoComplete="false"/>
+                  <button type='submit'>
+                    <img src={magnifyingGlass} loading="lazy" alt="search" />
+                  </button>
+                </Form>
+              )
+            }}
+          </Formik>
         </div>
       </section>
 
