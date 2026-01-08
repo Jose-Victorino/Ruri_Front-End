@@ -16,9 +16,11 @@ import mopGrab from '@/assets/mop/paymongo_grab_pay.png'
 import mopMaya from '@/assets/mop/Maya_logo.png'
 import mopBpi from '@/assets/mop/bpi.png'
 import mopBillease from '@/assets/mop/billease.svg'
+import { useNavigate } from 'react-router'
 
 function Payment() {
   const { state, dispatch } = useGlobal()
+  const navigate = useNavigate();
 
   ScrollResetEffect()
 
@@ -35,6 +37,10 @@ function Payment() {
     dispatch({type: ACTIONS.UPDATE_CHECKOUT_INFORMATION, payload: { name, value }})
   }
 
+  const handleSubmit = (values) => {
+    navigate('/order-confirmation')
+  }
+  
   return (
     <section className={s.payment}>
       <ul className={s.infoList}>
@@ -70,6 +76,7 @@ function Payment() {
       <Formik
         initialValues={{mop}}
         enableReinitialize={true}
+        onSubmit={handleSubmit}
       >
         {({ values, setFieldValue, errors, touched }) => (
           <Form className='flex-col gap-20'>
@@ -142,7 +149,7 @@ function Payment() {
             <p>Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <Link>privacy policy.</Link></p>
             <Button
               text='Proceed to Next Step'
-              type='button'
+              type='submit'
               color='yellow'
               corners='sharp'
             />
